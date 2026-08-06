@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import { PlusCircle, Search, Moon, Sun, ShoppingBag, Heart } from 'lucide-react';
-import { useTheme } from 'next-themes';
 
 // ข้อมูลสินค้าตัวอย่าง 5 อย่าง
 const SAMPLE_PRODUCTS = [
