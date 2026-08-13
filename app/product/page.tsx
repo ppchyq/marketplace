@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
 export default function AddProductPage() {
-  const router = Router();
+  const router = useRouter();
   const [submitted, setSubmitted] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
