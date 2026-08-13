@@ -1,19 +1,59 @@
-// ไฟล์: app/page.tsx
 'use client';
 
 import Link from 'next/link';
+import Image from 'next/image';
 import { useTheme } from 'next-themes';
 import { PlusCircle, Search, Moon, Sun, ShoppingBag, Heart } from 'lucide-react';
 
 const SAMPLE_PRODUCTS = [
-  { id: 1, title: 'หนังสือ Calculus II สภาพ 95%', price: 180, category: 'หนังสือเรียน', location: 'ตึกวิศวะ', time: '10 นาทีที่แล้ว' },
-  { id: 2, title: 'เสื้อกาวน์ปฏิบัติการ Size L', price: 250, category: 'เสื้อผ้า/ยูนิฟอร์ม', location: 'ตึกวิทยาศาสตร์', time: '30 นาทีที่แล้ว' },
-  { id: 3, title: 'iPad Air 4 64GB WiFi (มีรอยนิดหน่อย)', price: 9500, category: 'ไอที/เครื่องใช้ไฟฟ้า', location: 'หอพักใน', time: '1 ชม. ที่แล้ว' },
-  { id: 4, title: 'เครื่องคิดเลขวิทยาศาสตร์ Casio', price: 400, category: 'อุปกรณ์การเรียน', location: 'โรงอาหารกลาง', time: '2 ชม. ที่แล้ว' },
-  { id: 5, title: 'จักรยานปั่นในมหาลัย สภาพพร้อมใช้งาน', price: 1200, category: 'อื่นๆ', location: 'ลานจอดรถตึกกิจกรรม', time: '3 ชม. ที่แล้ว' },
+  { 
+    id: 1, 
+    title: 'หนังสือ Calculus II สภาพ 95%', 
+    price: 180, 
+    category: 'หนังสือเรียน', 
+    location: 'ตึกวิศวะ', 
+    time: '10 นาทีที่แล้ว',
+    image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80'
+  },
+  { 
+    id: 2, 
+    title: 'เสื้อกาวน์ปฏิบัติการ Size L', 
+    price: 250, 
+    category: 'เสื้อผ้า/ยูนิฟอร์ม', 
+    location: 'ตึกวิทยาศาสตร์', 
+    time: '30 นาทีที่แล้ว',
+    image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?auto=format&fit=crop&w=600&q=80'
+  },
+  { 
+    id: 3, 
+    title: 'iPad Air 4 64GB WiFi (มีรอยนิดหน่อย)', 
+    price: 9500, 
+    category: 'ไอที/เครื่องใช้ไฟฟ้า', 
+    location: 'หอพักใน', 
+    time: '1 ชม. ที่แล้ว',
+    image: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=600&q=80'
+  },
+  { 
+    id: 4, 
+    title: 'เครื่องคิดเลขวิทยาศาสตร์ Casio', 
+    price: 400, 
+    category: 'อุปกรณ์การเรียน', 
+    location: 'โรงอาหารกลาง', 
+    time: '2 ชม. ที่แล้ว',
+    image: 'https://images.unsplash.com/photo-1594980596870-8aa52a78d8cd?auto=format&fit=crop&w=600&q=80'
+  },
+  { 
+    id: 5, 
+    title: 'จักรยานปั่นในมหาลัย สภาพพร้อมใช้งาน', 
+    price: 1200, 
+    category: 'อื่นๆ', 
+    location: 'ลานจอดรถตึกกิจกรรม', 
+    time: '3 ชม. ที่แล้ว',
+    image: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=600&q=80'
+  },
 ];
 
-export default function HomePage() {
+export default function Home() {
   const { theme, setTheme } = useTheme();
 
   return (
@@ -66,14 +106,22 @@ export default function HomePage() {
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
           {SAMPLE_PRODUCTS.map((product) => (
-            <div key={product.id} className="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 rounded-2xl p-3 shadow-sm flex flex-col justify-between">
+            <div key={product.id} className="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 rounded-2xl p-3 shadow-sm flex flex-col justify-between overflow-hidden">
               <div>
-                <div className="relative h-32 w-full bg-slate-100 dark:bg-slate-800 rounded-xl mb-2.5 flex items-center justify-center text-slate-400 text-xs">
-                  [ รูปสินค้า {product.id} ]
-                  <button className="absolute top-2 right-2 p-1.5 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-full text-slate-600 dark:text-slate-300">
+                {/* Product Image Container */}
+                <div className="relative h-36 w-full rounded-xl mb-2.5 overflow-hidden bg-slate-100 dark:bg-slate-800">
+                  <Image
+                    src={product.image}
+                    alt={product.title}
+                    fill
+                    unoptimized
+                    className="object-cover hover:scale-105 transition-transform duration-300"
+                  />
+                  <button className="absolute top-2 right-2 p-1.5 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-full text-slate-600 dark:text-slate-300 hover:text-red-500 transition-colors">
                     <Heart size={14} />
                   </button>
                 </div>
+
                 <span className="text-[10px] px-2 py-0.5 bg-indigo-50 dark:bg-indigo-950/60 text-indigo-600 dark:text-indigo-400 font-medium rounded-md">
                   {product.category}
                 </span>
@@ -93,7 +141,7 @@ export default function HomePage() {
       </section>
 
       {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 max-w-md mx-auto md:max-w-4xl px-8 py-3 flex justify-around items-center">
+      <nav className="fixed bottom-0 left-0 right-0 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 max-w-md mx-auto md:max-w-4xl px-8 py-3 flex justify-around items-center z-50">
         <Link href="/" className="flex flex-col items-center text-indigo-600 dark:text-indigo-400 font-semibold text-xs">
           <ShoppingBag size={20} />
           <span>หน้าหลัก</span>
