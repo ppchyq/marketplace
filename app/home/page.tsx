@@ -1,8 +1,8 @@
 'use client';
 
 import Link from 'next/link';
+import { useTheme } from 'next-themes'; // เพิ่มการนำเข้าตรงนี้
 import { PlusCircle, Search, Moon, Sun, ShoppingBag, Heart } from 'lucide-react';
-
 // ข้อมูลสินค้าตัวอย่าง 5 อย่าง
 const SAMPLE_PRODUCTS = [
   { id: 1, title: 'หนังสือ Calculus II สภาพ 95%', price: 180, category: 'หนังสือเรียน', location: 'ตึกวิศวะ', time: '10 นาทีที่แล้ว' },
