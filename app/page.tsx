@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { 
   Search, Moon, Sun, ShoppingBag, Sparkles, X, 
-  MessageSquare, ShoppingCart, Trash2, Eye, Plus, ShieldCheck, Zap, SlidersHorizontal, ArrowUpRight
+  MessageSquare, ShoppingCart, Trash2, Eye, Plus, ShieldCheck, Zap, SlidersHorizontal
 } from 'lucide-react';
 
 const Canvas3D = dynamic(() => import('@/components/Canvas3D'), { ssr: false });
@@ -35,9 +35,15 @@ interface CartItem extends Product {
 
 const SAMPLE_PRODUCTS: Product[] = [
   { id: 1, title: 'หนังสือ Calculus II สภาพ 95%', price: 180, category: 'หนังสือเรียน', location: 'ตึกวิศวะ', time: '10 นาทีที่แล้ว', image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80', description: 'หนังสือแคลคูลัส 2 สภาพดีมาก ไม่มีรอยขีดเขียน มีสรุปสูตรสำคัญแถมให้ในเล่ม', seller: 'พี่นก (วิศวะ ปี 3)', sellerStatus: 'ออนไลน์อยู่', sellerResponseRate: 'ตอบไวภายใน 5 นาที', condition: 'มือสอง (สภาพ 95%)', isHot: true },
-  { id: 2, title: 'เสื้อกาวน์ปฏิบัติการ Size L', price: 250, category: 'เสื้อผ้า/ยูนิฟอร์ม', location: 'ตึกวิทยาศาสตร์', time: '30 นาทีที่แล้ว', image: 'https://images.unsplash.com/photo-1584634731339-252c581abfc5?auto=format&fit=crop&w=600&q=80', description: 'เสื้อกาวน์แล็ปแขนยาว ผ้าหนาปานกลาง ซักสะอาดเรียบร้อย ใส่ไปแล็ปแค่ 3 ครั้ง', seller: 'กิ๊ฟ (สหเวช ปี 2)', sellerStatus: 'ใช้งานล่าสุด 15 นาทีที่แล้ว', sellerResponseRate: 'ตอบภายใน 15 นาที', condition: 'มือสอง (สภาพ 98%)' },
+  
+  // อัปเดตรูปเสื้อกาวน์ปฏิบัติการ (รูปตรงปก ชัดเจน)
+  { id: 2, title: 'เสื้อกาวน์ปฏิบัติการ Size L', price: 250, category: 'เสื้อผ้า/ยูนิฟอร์ม', location: 'ตึกวิทยาศาสตร์', time: '30 นาทีที่แล้ว', image: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80', description: 'เสื้อกาวน์แล็ปแขนยาว ผ้าหนาปานกลาง ซักสะอาดเรียบร้อย ใส่ไปแล็ปแค่ 3 ครั้ง', seller: 'กิ๊ฟ (สหเวช ปี 2)', sellerStatus: 'ใช้งานล่าสุด 15 นาทีที่แล้ว', sellerResponseRate: 'ตอบภายใน 15 นาที', condition: 'มือสอง (สภาพ 98%)' },
+  
   { id: 3, title: 'iPad Air 4 64GB WiFi (มีรอยนิดหน่อย)', price: 9500, category: 'ไอที/เครื่องใช้ไฟฟ้า', location: 'หอพักใน', time: '1 ชม. ที่แล้ว', image: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=600&q=80', description: 'ใช้งานได้ปกติทุกฟังก์ชั่น สแกนนิ้วติด แบตอึด 88% แถมเคสให้ด้วยครับ', seller: 'มาร์ค (ไอซีที ปี 4)', sellerStatus: 'ออนไลน์อยู่', sellerResponseRate: 'ตอบไวภายใน 2 นาที', condition: 'มือสอง (มีรอยตามการใช้งาน)', isHot: true },
-  { id: 4, title: 'เครื่องคิดเลขวิทยาศาสตร์ Casio FX-991EX', price: 400, category: 'อุปกรณ์การเรียน', location: 'โรงอาหารกลาง', time: '2 ชม. ที่แล้ว', image: 'https://images.unsplash.com/photo-1611125832047-1d7ad1e8e48b?auto=format&fit=crop&w=600&q=80', description: 'รุ่นยอดฮิตสอบผ่านสบาย ปุ่มกดตอบสนองดี หน้าจอใสไม่มีรอย แถมฝาครอบแท้', seller: 'แบงค์ (บัญชี ปี 2)', sellerStatus: 'ใช้งานล่าสุด 1 ชม. ที่แล้ว', sellerResponseRate: 'ตอบภายใน 30 นาที', condition: 'มือสอง (สภาพดี)' },
+  
+  // อัปเดตรูปเครื่องคิดเลขวิทยาศาสตร์ (รูปตรงปก ชัดเจน)
+  { id: 4, title: 'เครื่องคิดเลขวิทยาศาสตร์ Casio FX-991EX', price: 400, category: 'อุปกรณ์การเรียน', location: 'โรงอาหารกลาง', time: '2 ชม. ที่แล้ว', image: 'https://images.unsplash.com/photo-1594980596870-8aa52a78d8cd?auto=format&fit=crop&w=600&q=80', description: 'รุ่นยอดฮิตสอบผ่านสบาย ปุ่มกดตอบสนองดี หน้าจอใสไม่มีรอย แถมฝาครอบแท้', seller: 'แบงค์ (บัญชี ปี 2)', sellerStatus: 'ใช้งานล่าสุด 1 ชม. ที่แล้ว', sellerResponseRate: 'ตอบภายใน 30 นาที', condition: 'มือสอง (สภาพดี)' },
+  
   { id: 5, title: 'จักรยานปั่นในมหาลัย สภาพพร้อมใช้งาน', price: 1200, category: 'อื่นๆ', location: 'ลานจอดรถตึกกิจกรรม', time: '3 ชม. ที่แล้ว', image: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=600&q=80', description: 'ปั่นไปเรียนสะดวกมาก เบรกทำงานได้ปกติ ยางเพิ่งเปลี่ยนใหม่เดือนที่แล้ว', seller: 'ตั้ม (เกษตร ปี 3)', sellerStatus: 'ออนไลน์อยู่', sellerResponseRate: 'ตอบไวภายใน 10 นาที', condition: 'มือสองพร้อมใช้งาน' },
   { id: 6, title: 'หูฟังไร้สาย Sony WH-1000XM4', price: 4800, category: 'ไอที/เครื่องใช้ไฟฟ้า', location: 'หอพักนอก (ประตู 2)', time: '4 ชม. ที่แล้ว', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80', description: 'หูฟังตัดเสียงรบกวนระดับท็อป ใส่ อ่านหนังสือในห้องสมุดเงียบกริบ แบตเตอรี่ยังอึด', seller: 'เจมส์ (สถาปัตย์ ปี 4)', sellerStatus: 'ออนไลน์อยู่', sellerResponseRate: 'ตอบไวภายใน 5 นาที', condition: 'มือสอง (สภาพ 90%)', isHot: true },
   { id: 7, title: 'โคมไฟอ่านหนังสือ LED ถนอมสายตา', price: 190, category: 'อุปกรณ์การเรียน', location: 'หอพักใน ตึก 4', time: '5 ชม. ที่แล้ว', image: 'https://images.unsplash.com/photo-1534073828943-f801091bb18c?auto=format&fit=crop&w=600&q=80', description: 'โคมไฟตั้งโต๊ะเสียบ USB หรือใช้แบตในตัวได้ ปรับระดับความสว่างได้ 3 ระดับ', seller: 'พลอย (มนุษยศาสตร์ ปี 1)', sellerStatus: 'ใช้งานล่าสุด 3 ชม. ที่แล้ว', sellerResponseRate: 'ตอบภายใน 1 ชม.', condition: 'ของใหม่ไม่ได้ใช้งาน' },
@@ -90,7 +96,7 @@ export default function Home() {
   return (
     <div className="max-w-md md:max-w-6xl mx-auto min-h-screen pb-32 px-4 pt-6 font-sans selection:bg-cyan-500 selection:text-black">
       
-      {/* Header สไตล์ Neo-Futuristic */}
+      {/* Header */}
       <header className="flex items-center justify-between p-4 rounded-3xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-2xl border border-slate-200/80 dark:border-slate-800 shadow-xl sticky top-4 z-40">
         <div className="flex items-center gap-3">
           <div className="p-3 rounded-2xl bg-gradient-to-tr from-cyan-500 via-indigo-500 to-purple-600 text-white shadow-lg shadow-cyan-500/25">
@@ -128,14 +134,14 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Cyber Search Bar */}
+      {/* Search Bar */}
       <div className="relative my-6">
         <div className="absolute left-4 top-3.5 p-1 bg-cyan-500/10 rounded-lg text-cyan-500">
           <Search size={18} />
         </div>
         <input 
           type="text" 
-          placeholder="ค้นหาสินค้า AI, อุปกรณ์การเรียน, ไอที หรือนัดรับด่วน..." 
+          placeholder="ค้นหาสินค้า, เสื้อกาวน์, เครื่องคิดเลข หรือนัดรับ..." 
           className="w-full pl-14 pr-12 py-4 rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-cyan-500 text-sm font-medium shadow-sm transition-all"
         />
         <button className="absolute right-3 top-3 p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-400 hover:text-cyan-500 transition-colors">
@@ -143,7 +149,7 @@ export default function Home() {
         </button>
       </div>
 
-      {/* 3D Showcase Box (ปรับพื้นหลังเปลี่ยนเป็นสีขาวทั้งหมดแล้ว) */}
+      {/* 3D Showcase Box */}
       <div className="my-6 rounded-3xl overflow-hidden border border-slate-200/80 dark:border-slate-800 shadow-2xl relative bg-white">
         <div className="absolute top-4 left-4 z-10 flex items-center gap-2 bg-slate-900/90 backdrop-blur-md px-3 py-1.5 rounded-full border border-slate-700/50 text-white text-xs font-bold shadow-lg">
           <Sparkles size={14} className="text-cyan-400 animate-spin" />
@@ -154,7 +160,7 @@ export default function Home() {
         </div>
       </div>
 
-      {/* สินค้า 20 รายการ */}
+      {/* Product List */}
       <section className="mt-8">
         <div className="flex items-center justify-between mb-6">
           <div>
@@ -179,7 +185,6 @@ export default function Home() {
               className="cursor-pointer bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 rounded-3xl p-3.5 shadow-sm hover:shadow-2xl hover:border-cyan-500/50 transition-all flex flex-col justify-between group relative overflow-hidden"
             >
               <div>
-                {/* รูปสินค้า + ปุ่ม quick add */}
                 <div className="relative h-44 w-full rounded-2xl mb-3 overflow-hidden bg-slate-100 dark:bg-slate-800">
                   <Image 
                     src={product.image} 
@@ -233,7 +238,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Modal Pop-up ส่องสินค้า + โมเดล 3D พื้นหลังขาวสะอาดชัดเจน */}
+      {/* Modal Details */}
       <AnimatePresence>
         {selectedProduct && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-xl">
@@ -251,7 +256,6 @@ export default function Home() {
               </button>
 
               <div className="overflow-y-auto p-5 space-y-4">
-                {/* 3D Model Box พื้นหลังสีขาว ให้เห็นรายละเอียดชัดเจนที่สุด */}
                 <div className="relative h-60 w-full rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-inner">
                   <Canvas3D category={selectedProduct.category} />
                   <div className="absolute bottom-3 left-3 text-[10px] font-bold bg-slate-900/90 backdrop-blur-md text-cyan-300 px-3 py-1 rounded-full border border-slate-700">
@@ -264,7 +268,6 @@ export default function Home() {
                   <p className="text-2xl font-black text-cyan-600 dark:text-cyan-400 mt-1">฿{selectedProduct.price.toLocaleString()}</p>
                 </div>
 
-                {/* Seller Response Badge */}
                 <div className="p-4 bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/50 rounded-2xl space-y-1.5">
                   <div className="flex items-center justify-between text-xs">
                     <span className="font-bold flex items-center gap-1.5 text-slate-800 dark:text-slate-100">
@@ -296,7 +299,6 @@ export default function Home() {
                   </div>
                 </div>
 
-                {/* Action Buttons */}
                 <div className="pt-2 flex gap-2">
                   <button 
                     onClick={() => {
