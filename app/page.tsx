@@ -8,7 +8,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { 
   Search, Moon, Sun, ShoppingBag, Sparkles, X, 
-  MessageSquare, ShoppingCart, Trash2, Eye, Plus, Clock, CheckCircle2, Zap
+  MessageSquare, ShoppingCart, Trash2, Eye, Plus, CheckCircle2, Zap, ShieldCheck
 } from 'lucide-react';
 
 const Canvas3D = dynamic(() => import('@/components/Canvas3D'), { ssr: false });
@@ -105,7 +105,7 @@ const SAMPLE_PRODUCTS: Product[] = [
   },
   { 
     id: 6, 
-    title: 'หูฟังไร้สาย Sony WH-1000XM4 ตัดเสียงดีมาก', 
+    title: 'หูฟังไร้สาย Sony WH-1000XM4', 
     price: 4800, 
     category: 'ไอที/เครื่องใช้ไฟฟ้า', 
     location: 'หอพักนอก (ประตู 2)', 
@@ -119,7 +119,7 @@ const SAMPLE_PRODUCTS: Product[] = [
   },
   { 
     id: 7, 
-    title: 'โคมไฟอ่านหนังสือ LED ถนอมสายตา ปรับแสงได้', 
+    title: 'โคมไฟอ่านหนังสือ LED ถนอมสายตา', 
     price: 190, 
     category: 'อุปกรณ์การเรียน', 
     location: 'หอพักใน ตึก 4', 
@@ -147,7 +147,7 @@ const SAMPLE_PRODUCTS: Product[] = [
   },
   { 
     id: 9, 
-    title: 'กระเป๋าเป้ Anello ใส่โน้ตบุ๊ก 15 นิ้วได้', 
+    title: 'กระเป๋าเป้ Anello ใส่โน้ตบุ๊ก 15 นิ้ว', 
     price: 450, 
     category: 'เสื้อผ้า/ยูนิฟอร์ม', 
     location: 'ศูนย์หนังสือมหาลัย', 
@@ -161,7 +161,7 @@ const SAMPLE_PRODUCTS: Product[] = [
   },
   { 
     id: 10, 
-    title: 'คีย์บอร์ดกลไก Mechanical Keyboard RGB', 
+    title: 'คีย์บอร์ดกลไก Mechanical RGB', 
     price: 890, 
     category: 'ไอที/เครื่องใช้ไฟฟ้า', 
     location: 'ตึกวิศวะคอม', 
@@ -172,6 +172,146 @@ const SAMPLE_PRODUCTS: Product[] = [
     sellerStatus: 'ออนไลน์อยู่',
     sellerResponseRate: 'ตอบไวภายใน 1 นาที',
     condition: 'มือสอง (สภาพ 95%)'
+  },
+  { 
+    id: 11, 
+    title: 'MacBook Air M1 RAM 8GB SSD 256GB', 
+    price: 18500, 
+    category: 'ไอที/เครื่องใช้ไฟฟ้า', 
+    location: 'หอพักใน ตึก 2', 
+    time: '14 ชม. ที่แล้ว',
+    image: 'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=600&q=80',
+    description: 'สภาพนางฟ้า แบตเตอรี Health 92% กล่องอุปกรณ์ครบ ใช้ทำรายงานและตัดต่อเบาๆ',
+    seller: 'เคท (นิเทศ ปี 3)',
+    sellerStatus: 'ออนไลน์อยู่',
+    sellerResponseRate: 'ตอบไวภายใน 3 นาที',
+    condition: 'มือสอง (สภาพ 96%)'
+  },
+  { 
+    id: 12, 
+    title: 'แก้วเก็บความเย็น Yeti 30 oz ลายคลาสสิก', 
+    price: 220, 
+    category: 'อุปกรณ์การเรียน', 
+    location: 'โรงอาหารตึกกลาง', 
+    time: '15 ชม. ที่แล้ว',
+    image: 'https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=600&q=80',
+    description: 'เก็บความเย็นได้ข้ามคืน ไม่มีน้ำเกาะข้างแก้ว มีหลอดสแตนเลสให้',
+    seller: 'อาร์ม (วิศวะ ปี 1)',
+    sellerStatus: 'ใช้งานล่าสุด 30 นาทีที่แล้ว',
+    sellerResponseRate: 'ตอบภายใน 10 นาที',
+    condition: 'สภาพดีเยี่ยม'
+  },
+  { 
+    id: 13, 
+    title: 'เมาส์ไร้สาย Logitech MX Master 3S', 
+    price: 2600, 
+    category: 'ไอที/เครื่องใช้ไฟฟ้า', 
+    location: 'ห้องสำนักหอสมุด', 
+    time: '18 ชม. ที่แล้ว',
+    image: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=600&q=80',
+    description: 'เมาส์เพื่อสุขภาพ เสียงคลิกเงียบมาก เชื่อมต่อได้ 3 เครื่องพร้อมกัน',
+    seller: 'พีท (ไอที ปี 4)',
+    sellerStatus: 'ออนไลน์อยู่',
+    sellerResponseRate: 'ตอบไวภายใน 5 นาที',
+    condition: 'มือสอง (สภาพ 92%)'
+  },
+  { 
+    id: 14, 
+    title: 'กระดานวาดรูปต่อคอม Wacom Intuos', 
+    price: 1350, 
+    category: 'อุปกรณ์การเรียน', 
+    location: 'ตึกศิลปกรรม', 
+    time: '1 วันที่แล้ว',
+    image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80',
+    description: 'เหมาะสำหรับสายวาดและไดคัทงาน ปากกาไม่ต้องชาร์จไฟ แถมหัวปากกาสำรอง 3 หัว',
+    seller: 'ฝน (วิจิตรศิลป์ ปี 2)',
+    sellerStatus: 'ใช้งานล่าสุด 4 ชม. ที่แล้ว',
+    sellerResponseRate: 'ตอบภายใน 30 นาที',
+    condition: 'มือสอง (สภาพดี)'
+  },
+  { 
+    id: 15, 
+    title: 'กล้องฟิล์ม Olympus OM-1 พร้อมเลนส์ 50mm', 
+    price: 4200, 
+    category: 'อื่นๆ', 
+    location: 'ลานไทรหน้ามหาลัย', 
+    time: '1 วันที่แล้ว',
+    image: 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=600&q=80',
+    description: 'กล้องฟิล์มคลาสสิกทำงานเต็มระบบ สปีดชัตเตอร์ตรง เลนส์ใสไม่มีราไม่มีฝ้า',
+    seller: 'ปอนด์ (นิเทศ ปี 4)',
+    sellerStatus: 'ออนไลน์อยู่',
+    sellerResponseRate: 'ตอบไวภายใน 10 นาที',
+    condition: 'มือสอง (Vintage Classic)'
+  },
+  { 
+    id: 16, 
+    title: 'ชุดพับโต๊ะญี่ปุ่นไม้แท้ + เก้าอี้เบาะนุ่ม', 
+    price: 350, 
+    category: 'อื่นๆ', 
+    location: 'หอพักนอก ประตู 3', 
+    time: '1 วันที่แล้ว',
+    image: 'https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&w=600&q=80',
+    description: 'โต๊ะไม้พับเก็บได้ ขาแข็งแรงไม่โยก เหมาะกับนั่งอ่านหนังสือบนเตียงหรือพื้น',
+    seller: 'ตูน (เศรษฐศาสตร์ ปี 2)',
+    sellerStatus: 'ใช้งานล่าสุด 1 ชม. ที่แล้ว',
+    sellerResponseRate: 'ตอบภายใน 15 นาที',
+    condition: 'มือสอง (สภาพดี)'
+  },
+  { 
+    id: 17, 
+    title: 'นาฬิกา Seiko Automatic Vintage สายสแตนเลส', 
+    price: 3100, 
+    category: 'เสื้อผ้า/ยูนิฟอร์ม', 
+    location: 'ตึกบริหารธุรกิจ', 
+    time: '2 วันที่แล้ว',
+    image: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=600&q=80',
+    description: 'นาฬิกาข้อมือผู้ชายระบบออโตเมติก หน้าปัดคลาสสิก เดินตรง มีช่องบอกวันและวันที่',
+    seller: 'ก้อง (บริหาร ปี 4)',
+    sellerStatus: 'ออนไลน์อยู่',
+    sellerResponseRate: 'ตอบไวภายใน 5 นาที',
+    condition: 'มือสอง (สภาพสะสม)'
+  },
+  { 
+    id: 18, 
+    title: 'พัดลมไอเย็นขนาดพกพา USB', 
+    price: 150, 
+    category: 'อุปกรณ์การเรียน', 
+    location: 'ตึกเรียนรวม 2', 
+    time: '2 วันที่แล้ว',
+    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=600&q=80',
+    description: 'เติมน้ำหรือน้ำแข็งด้านบนแล้วเย็นเจี๊ยบ ปรับระดับความแรงลมได้ 3 ระดับ',
+    seller: 'จอย (วิทยาการจัดการ ปี 1)',
+    sellerStatus: 'ใช้งานล่าสุด 5 ชม. ที่แล้ว',
+    sellerResponseRate: 'ตอบภายใน 1 ชม.',
+    condition: 'มือสอง (สภาพ 90%)'
+  },
+  { 
+    id: 19, 
+    title: 'หนังสือฟิสิกส์มหาวิทยาลัย (University Physics)', 
+    price: 290, 
+    category: 'หนังสือเรียน', 
+    location: 'ตึกฟิสิกส์', 
+    time: '2 วันที่แล้ว',
+    image: 'https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&w=600&q=80',
+    description: 'ฉบับแปลไทย เล่มใหญ่เนื้อหาครบถ้วน มีโจทย์พร้อมเฉลยอย่างละเอียดท้ายบท',
+    seller: 'บิว (วิทยาศาสตร์ ปี 2)',
+    sellerStatus: 'ออนไลน์อยู่',
+    sellerResponseRate: 'ตอบไวภายใน 10 นาที',
+    condition: 'มือสอง (สภาพ 92%)'
+  },
+  { 
+    id: 20, 
+    title: 'ไมค์อัดเสียง USB Condenser Fifine K669B', 
+    price: 780, 
+    category: 'ไอที/เครื่องใช้ไฟฟ้า', 
+    location: 'ตึกดนตรี', 
+    time: '3 วันที่แล้ว',
+    image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=600&q=80',
+    description: 'เสียงคมชัด ใช้แคสเกม อัดเสียงร้อง หรือนำเสนอคุยงานใน Zoom แถมขาตั้งสามขา',
+    seller: 'แดน (ดุริยางคศิลป์ ปี 3)',
+    sellerStatus: 'ออนไลน์อยู่',
+    sellerResponseRate: 'ตอบไวภายใน 2 นาที',
+    condition: 'มือสอง (สภาพดีมาก)'
   }
 ];
 
@@ -184,7 +324,7 @@ export default function Home() {
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   const addToCart = (product: Product, e?: React.MouseEvent) => {
-    if (e) e.stopPropagation(); // กันไม่ให้กดเปิด Pop-up
+    if (e) e.stopPropagation();
     setCart((prevCart) => {
       const existing = prevCart.find((item) => item.id === product.id);
       if (existing) {
@@ -207,31 +347,31 @@ export default function Home() {
   };
 
   return (
-    <div className="max-w-md md:max-w-4xl mx-auto min-h-screen pb-32 px-4 pt-6 relative selection:bg-indigo-500 selection:text-white">
-      {/* Header ดีไซน์ใหม่ หัวข้อใหญ่เท่ดุดัน */}
-      <header className="flex items-center justify-between py-2 border-b border-slate-200/80 dark:border-slate-800/80 pb-4">
+    <div className="max-w-md md:max-w-5xl mx-auto min-h-screen pb-32 px-4 pt-6 relative font-serif text-slate-800 dark:text-slate-100 selection:bg-amber-500 selection:text-white">
+      {/* Premium Header ดีไซน์เรียบหรู คลาสสิก */}
+      <header className="flex items-center justify-between py-3 border-b-2 border-amber-600/30 dark:border-amber-500/20 pb-4">
         <div>
           <div className="flex items-center gap-2">
-            <span className="p-2 rounded-xl bg-indigo-600 text-white shadow-lg shadow-indigo-500/30">
-              <ShoppingBag size={22} />
+            <span className="p-2 rounded-lg bg-amber-600 text-white shadow-md shadow-amber-600/20">
+              <ShoppingBag size={20} />
             </span>
-            <span className="text-[11px] font-black tracking-widest uppercase bg-gradient-to-r from-indigo-500 to-purple-500 bg-clip-text text-transparent">
-              Campus Marketplace 3D
+            <span className="text-[11px] font-sans font-bold tracking-widest uppercase text-amber-600 dark:text-amber-400">
+              Classic Collection
             </span>
           </div>
-          <h1 className="text-3xl md:text-4xl font-black tracking-tight mt-1 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-600 dark:from-white dark:via-slate-200 dark:to-slate-400 bg-clip-text text-transparent">
-            CAMPUS HUB
+          <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight mt-1 font-serif text-slate-900 dark:text-amber-100">
+            CAMPUS MARKETPLACE
           </h1>
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-3 font-sans">
           <button 
             onClick={() => setIsCartOpen(true)}
-            className="relative p-3 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:scale-105 active:scale-95 transition-all shadow-sm"
+            className="relative p-3 rounded-xl bg-slate-100 dark:bg-slate-800/90 border border-amber-600/20 text-slate-800 dark:text-amber-200 hover:border-amber-500 transition-all shadow-sm"
           >
-            <ShoppingCart size={22} />
+            <ShoppingCart size={20} />
             {cart.length > 0 && (
-              <span className="absolute -top-1.5 -right-1.5 bg-indigo-600 text-white text-[10px] font-black h-5 w-5 rounded-full flex items-center justify-center border-2 border-white dark:border-slate-900 animate-pulse">
+              <span className="absolute -top-1.5 -right-1.5 bg-amber-600 text-white text-[10px] font-bold h-5 w-5 rounded-full flex items-center justify-center border-2 border-white dark:border-slate-900">
                 {cart.reduce((sum, item) => sum + item.quantity, 0)}
               </span>
             )}
@@ -239,83 +379,87 @@ export default function Home() {
 
           <button 
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-            className="p-3 rounded-2xl bg-slate-100 dark:bg-slate-800 text-slate-800 dark:text-slate-100 hover:scale-105 active:scale-95 transition-all shadow-sm"
+            className="p-3 rounded-xl bg-slate-100 dark:bg-slate-800/90 border border-amber-600/20 text-slate-800 dark:text-amber-200 hover:border-amber-500 transition-all shadow-sm"
           >
-            {theme === 'dark' ? <Sun size={22} /> : <Moon size={22} />}
+            {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
           </button>
         </div>
       </header>
 
-      {/* ช่องค้นหาลุคไซเบอร์ */}
-      <div className="relative my-5">
-        <Search className="absolute left-4 top-3.5 text-indigo-500" size={20} />
+      {/* ช่องค้นหาสไตล์ Classic Elegant */}
+      <div className="relative my-6 font-sans">
+        <Search className="absolute left-4 top-3.5 text-amber-600 dark:text-amber-400" size={18} />
         <input 
           type="text" 
-          placeholder="ค้นหาสินค้าด้วย AI เช่น หนังสือ, iPad, รองเท้า..." 
-          className="w-full pl-12 pr-4 py-3.5 rounded-2xl bg-slate-100 dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm font-medium shadow-inner transition-all"
+          placeholder="ค้นหาสินค้ามือสองพรีเมียมในมหาลัย..." 
+          className="w-full pl-12 pr-4 py-3.5 rounded-xl bg-slate-50 dark:bg-slate-900/90 border border-slate-200 dark:border-amber-900/40 focus:outline-none focus:ring-1 focus:ring-amber-500 text-sm shadow-inner transition-all"
         />
       </div>
 
-      {/* Canvas 3D Hero */}
-      <div className="my-6 h-52 rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-xl">
+      {/* 3D Showcase Banner */}
+      <div className="my-6 h-56 rounded-2xl overflow-hidden border border-amber-600/20 shadow-xl bg-slate-950">
         <Canvas3D />
       </div>
 
-      {/* รายการสินค้า */}
-      <section className="mt-8">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-xl font-black flex items-center gap-2 tracking-tight">
-            <Sparkles size={22} className="text-indigo-500" />
-            สินค้าหลุดจองล่าสุด
-          </h2>
-          <span className="text-xs font-semibold text-slate-400">10 รายการพร้อมส่ง</span>
+      {/* หัวข้อรายการสินค้า 20 รายการ */}
+      <section className="mt-8 font-sans">
+        <div className="flex items-center justify-between mb-5 border-l-4 border-amber-600 pl-3">
+          <div>
+            <h2 className="text-xl font-bold font-serif tracking-wide text-slate-900 dark:text-amber-100 flex items-center gap-2">
+              <Sparkles size={20} className="text-amber-500" />
+              สินค้าคุณภาพแนะนำ
+            </h2>
+            <p className="text-xs text-slate-500 dark:text-slate-400">คัดสรรสินค้ามือสองสภาพดี 20 รายการล่าสุด</p>
+          </div>
+          <span className="text-xs font-semibold px-3 py-1 bg-amber-500/10 text-amber-600 dark:text-amber-400 rounded-full border border-amber-500/20">
+            20 Items
+          </span>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        {/* ตารางแสดงสินค้า 20 อย่าง */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {SAMPLE_PRODUCTS.map((product) => (
             <motion.div 
               key={product.id}
               onClick={() => setSelectedProduct(product)}
-              whileHover={{ y: -6 }}
-              transition={{ type: 'spring', stiffness: 300 }}
-              className="cursor-pointer bg-white dark:bg-slate-900 border border-slate-200/80 dark:border-slate-800/80 rounded-3xl p-3 shadow-sm hover:shadow-xl hover:border-indigo-500/40 transition-all flex flex-col justify-between group relative overflow-hidden"
+              whileHover={{ y: -5 }}
+              transition={{ type: 'spring', stiffness: 250 }}
+              className="cursor-pointer bg-white dark:bg-slate-900 border border-slate-200/90 dark:border-amber-900/30 rounded-2xl p-3 shadow-sm hover:shadow-md hover:border-amber-500/50 transition-all flex flex-col justify-between group relative"
             >
               <div>
-                {/* รูปสินค้า + ปุ่มลงตะกร้าบนรูป */}
-                <div className="relative h-40 w-full rounded-2xl mb-3 overflow-hidden bg-slate-100 dark:bg-slate-800">
+                <div className="relative h-40 w-full rounded-xl mb-3 overflow-hidden bg-slate-100 dark:bg-slate-800">
                   <Image 
                     src={product.image} 
                     alt={product.title} 
                     fill 
                     unoptimized 
-                    className="object-cover group-hover:scale-110 transition-transform duration-500" 
+                    className="object-cover group-hover:scale-105 transition-transform duration-500" 
                   />
                   
-                  <div className="absolute bottom-2 left-2 bg-slate-900/80 backdrop-blur-md text-white text-[9px] font-bold px-2 py-1 rounded-lg flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <Eye size={12} /> กดเพื่อดู 3D
+                  <div className="absolute bottom-2 left-2 bg-slate-900/85 backdrop-blur-md text-amber-300 text-[9px] font-medium px-2 py-0.5 rounded flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <Eye size={10} /> ดู 3D
                   </div>
 
-                  {/* ปุ่มกดใส่ตะกร้าทันทีที่ทัชรูป */}
                   <button
                     onClick={(e) => addToCart(product, e)}
-                    title="ลงตะกร้าทันที"
-                    className="absolute top-2 right-2 p-2.5 rounded-xl bg-indigo-600 text-white shadow-lg hover:bg-indigo-500 active:scale-90 transition-all z-10"
+                    title="ใส่ตะกร้าทันที"
+                    className="absolute top-2 right-2 p-2 rounded-lg bg-amber-600 text-white shadow-md hover:bg-amber-700 transition-all z-10"
                   >
-                    <Plus size={16} className="font-bold" />
+                    <Plus size={16} />
                   </button>
                 </div>
 
-                <span className="text-[10px] font-bold uppercase tracking-wider px-2.5 py-1 bg-indigo-50 dark:bg-indigo-950/80 text-indigo-600 dark:text-indigo-400 rounded-lg">
+                <span className="text-[9px] font-bold uppercase tracking-wider px-2 py-0.5 bg-amber-500/10 text-amber-700 dark:text-amber-400 rounded border border-amber-500/20">
                   {product.category}
                 </span>
-                <h3 className="font-bold text-xs mt-2 line-clamp-2 leading-snug group-hover:text-indigo-500 transition-colors">
+                <h3 className="font-serif font-bold text-xs mt-2 line-clamp-2 leading-snug group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
                   {product.title}
                 </h3>
               </div>
               
-              <div className="mt-4 pt-2 border-t border-slate-100 dark:border-slate-800/60">
-                <p className="text-indigo-600 dark:text-indigo-400 font-black text-base">฿{product.price.toLocaleString()}</p>
-                <div className="flex items-center justify-between text-[10px] text-slate-400 font-medium mt-1">
+              <div className="mt-3 pt-2 border-t border-slate-100 dark:border-slate-800">
+                <p className="text-amber-700 dark:text-amber-400 font-serif font-black text-base">฿{product.price.toLocaleString()}</p>
+                <div className="flex items-center justify-between text-[10px] text-slate-400 mt-1 font-sans">
                   <span>{product.location}</span>
                   <span>{product.time}</span>
                 </div>
@@ -325,85 +469,84 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Pop-up แสดงรายละเอียดสินค้า + การโต้ตอบของผู้ขาย + ปุ่มสลับตำแหน่ง */}
+      {/* Pop-up แสดงรายละเอียดสินค้า + การตอบกลับของผู้ขาย */}
       <AnimatePresence>
         {selectedProduct && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-md">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-sm font-sans">
             <motion.div 
-              initial={{ scale: 0.9, opacity: 0 }}
+              initial={{ scale: 0.95, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
-              exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl relative max-h-[90vh] flex flex-col"
+              exit={{ scale: 0.95, opacity: 0 }}
+              className="bg-white dark:bg-slate-900 border border-amber-600/30 w-full max-w-lg rounded-2xl overflow-hidden shadow-2xl relative max-h-[90vh] flex flex-col"
             >
               <button 
                 onClick={() => setSelectedProduct(null)}
-                className="absolute top-3 right-3 z-20 p-2.5 rounded-full bg-slate-900/70 text-white hover:bg-slate-900 transition-colors"
+                className="absolute top-3 right-3 z-20 p-2 rounded-full bg-slate-900/80 text-amber-200 hover:bg-slate-900 transition-colors"
               >
                 <X size={18} />
               </button>
 
               <div className="overflow-y-auto p-5 space-y-4">
-                {/* 3D Box View */}
-                <div className="relative h-60 w-full rounded-2xl overflow-hidden bg-slate-950 border border-indigo-500/30">
+                <div className="relative h-56 w-full rounded-xl overflow-hidden bg-slate-950 border border-amber-500/20">
                   <Canvas3D category={selectedProduct.category} />
-                  <div className="absolute bottom-3 left-3 text-[10px] font-bold bg-indigo-500/20 backdrop-blur-md text-indigo-300 px-3 py-1 rounded-full border border-indigo-500/30">
-                    🧊 โมเดล 3D โต้ตอบได้ (หมุนดูได้)
+                  <div className="absolute bottom-3 left-3 text-[10px] bg-slate-900/90 backdrop-blur-md text-amber-300 px-3 py-1 rounded border border-amber-500/30 font-mono">
+                    3D MODEL: {selectedProduct.category}
                   </div>
                 </div>
 
                 <div>
-                  <h2 className="text-xl font-black">{selectedProduct.title}</h2>
-                  <p className="text-2xl font-black text-indigo-600 dark:text-indigo-400 mt-1">฿{selectedProduct.price.toLocaleString()}</p>
+                  <h2 className="text-xl font-serif font-bold text-slate-900 dark:text-amber-100">{selectedProduct.title}</h2>
+                  <p className="text-2xl font-serif font-black text-amber-600 dark:text-amber-400 mt-1">฿{selectedProduct.price.toLocaleString()}</p>
                 </div>
 
-                {/* การตอบกลับและสถานะของผู้ขาย (Seller Response Status) */}
-                <div className="p-3.5 bg-gradient-to-r from-indigo-50/50 to-purple-50/50 dark:from-indigo-950/30 dark:to-purple-950/30 border border-indigo-200/50 dark:border-indigo-800/40 rounded-2xl space-y-1.5">
+                {/* Seller Status & Response Rate */}
+                <div className="p-3.5 bg-amber-500/5 border border-amber-500/20 rounded-xl space-y-1.5">
                   <div className="flex items-center justify-between text-xs">
-                    <span className="font-bold flex items-center gap-1.5 text-slate-700 dark:text-slate-200">
-                      <CheckCircle2 size={16} className="text-emerald-500" />
+                    <span className="font-bold flex items-center gap-1.5 text-slate-800 dark:text-slate-200">
+                      <ShieldCheck size={16} className="text-amber-500" />
                       ผู้ขาย: {selectedProduct.seller}
                     </span>
-                    <span className="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded-full">
+                    <span className="text-[10px] font-semibold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">
                       ● {selectedProduct.sellerStatus}
                     </span>
                   </div>
                   <p className="text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                    <Zap size={13} className="text-amber-500" />
-                    อัตราการตอบแชท: <span className="font-semibold text-slate-700 dark:text-slate-300">{selectedProduct.sellerResponseRate}</span>
+                    <Zap size={12} className="text-amber-500" />
+                    การโต้ตอบ: <span className="font-medium text-slate-700 dark:text-slate-300">{selectedProduct.sellerResponseRate}</span>
                   </p>
                 </div>
 
-                <div className="bg-slate-50 dark:bg-slate-800/50 p-4 rounded-2xl">
-                  <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">{selectedProduct.description}</p>
+                <div className="bg-slate-50 dark:bg-slate-800/50 p-3.5 rounded-xl border border-slate-100 dark:border-slate-800">
+                  <p className="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">{selectedProduct.description}</p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-2 text-xs">
-                  <div className="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-2xl">
-                    <p className="text-slate-400 text-[10px] font-medium">สถานที่นัดรับ</p>
+                  <div className="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-800">
+                    <p className="text-slate-400 text-[10px]">สถานที่นัดรับ</p>
                     <p className="font-bold mt-0.5">{selectedProduct.location}</p>
                   </div>
-                  <div className="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-2xl">
-                    <p className="text-slate-400 text-[10px] font-medium">สภาพสินค้า</p>
+                  <div className="p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-800">
+                    <p className="text-slate-400 text-[10px]">สภาพสินค้า</p>
                     <p className="font-bold mt-0.5">{selectedProduct.condition}</p>
                   </div>
                 </div>
 
-                {/* สลับตำแหน่งปุ่ม: ปุ่มลงตะกร้าเป็นปุ่มหลัก (Main Button) / ปุ่มทักแชทเป็นปุ่มรอง */}
+                {/* ปุ่มสั่งซื้อใส่ตะกร้า (ปุ่มหลัก) & ปุ่มทักแชท */}
                 <div className="pt-2 flex gap-2">
                   <button 
                     onClick={() => {
                       addToCart(selectedProduct);
                       alert('เพิ่มสินค้าลงตะกร้าเรียบร้อย!');
                     }}
-                    className="flex-1 py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-black text-xs shadow-lg shadow-indigo-600/30 transition-all flex items-center justify-center gap-2 active:scale-95"
+                    className="flex-1 py-3 bg-amber-600 hover:bg-amber-700 text-white rounded-xl font-bold text-xs shadow-md transition-all flex items-center justify-center gap-2 active:scale-95"
                   >
-                    <ShoppingCart size={18} /> ใส่ตะกร้าเลย
+                    <ShoppingCart size={16} /> ใส่ตะกร้าทันที
                   </button>
                   <button 
                     onClick={() => goToChat(selectedProduct)}
-                    className="px-4 py-3.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-800 dark:text-slate-200 rounded-2xl font-bold text-xs transition-colors flex items-center justify-center gap-1.5"
+                    className="px-4 py-3 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 rounded-xl font-bold text-xs transition-colors flex items-center justify-center gap-1.5"
                   >
-                    <MessageSquare size={16} /> ทักแชท
+                    <MessageSquare size={15} /> ทักแชท
                   </button>
                 </div>
               </div>
@@ -415,17 +558,17 @@ export default function Home() {
       {/* Cart Drawer */}
       <AnimatePresence>
         {isCartOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-end bg-black/70 backdrop-blur-sm">
+          <div className="fixed inset-0 z-50 flex items-center justify-end bg-black/75 backdrop-blur-sm font-sans">
             <motion.div 
               initial={{ x: 300, opacity: 0 }}
               animate={{ x: 0, opacity: 1 }}
               exit={{ x: 300, opacity: 0 }}
-              className="bg-white dark:bg-slate-900 w-full max-w-sm h-full p-5 flex flex-col justify-between shadow-2xl"
+              className="bg-white dark:bg-slate-900 w-full max-w-sm h-full p-5 flex flex-col justify-between shadow-2xl border-l border-amber-600/20"
             >
               <div>
                 <div className="flex items-center justify-between pb-4 border-b border-slate-200 dark:border-slate-800">
-                  <h3 className="font-black text-base flex items-center gap-2">
-                    <ShoppingCart size={20} className="text-indigo-500" /> ตะกร้าสินค้า
+                  <h3 className="font-serif font-bold text-base flex items-center gap-2">
+                    <ShoppingCart size={18} className="text-amber-600" /> ตะกร้าสินค้าของคุณ
                   </h3>
                   <button onClick={() => setIsCartOpen(false)} className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800">
                     <X size={18} />
@@ -437,12 +580,12 @@ export default function Home() {
                     <p className="text-xs text-center text-slate-400 py-12">ไม่มีสินค้าในตะกร้า</p>
                   ) : (
                     cart.map((item) => (
-                      <div key={item.id} className="flex items-center justify-between p-3.5 bg-slate-50 dark:bg-slate-800/50 rounded-2xl border border-slate-100 dark:border-slate-800">
+                      <div key={item.id} className="flex items-center justify-between p-3 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-slate-100 dark:border-slate-800">
                         <div>
-                          <h4 className="font-bold text-xs line-clamp-1">{item.title}</h4>
-                          <p className="text-xs font-black text-indigo-500 mt-1">฿{item.price.toLocaleString()} x {item.quantity}</p>
+                          <h4 className="font-serif font-bold text-xs line-clamp-1">{item.title}</h4>
+                          <p className="text-xs font-bold text-amber-600 dark:text-amber-400 mt-1">฿{item.price.toLocaleString()} x {item.quantity}</p>
                         </div>
-                        <button onClick={() => removeFromCart(item.id)} className="text-red-400 hover:text-red-500 p-2">
+                        <button onClick={() => removeFromCart(item.id)} className="text-red-400 hover:text-red-500 p-1.5">
                           <Trash2 size={16} />
                         </button>
                       </div>
@@ -453,9 +596,9 @@ export default function Home() {
 
               {cart.length > 0 && (
                 <div className="pt-4 border-t border-slate-200 dark:border-slate-800 space-y-3">
-                  <div className="flex justify-between items-center text-sm font-black">
+                  <div className="flex justify-between items-center text-sm font-bold font-serif">
                     <span>ราคารวมทั้งหมด</span>
-                    <span className="text-indigo-600 dark:text-indigo-400 text-xl">฿{totalPrice.toLocaleString()}</span>
+                    <span className="text-amber-600 dark:text-amber-400 text-lg">฿{totalPrice.toLocaleString()}</span>
                   </div>
                   <button 
                     onClick={() => {
@@ -463,9 +606,9 @@ export default function Home() {
                       setCart([]);
                       setIsCartOpen(false);
                     }}
-                    className="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-2xl font-black text-xs transition-all shadow-lg shadow-indigo-500/30 active:scale-95"
+                    className="w-full py-3 bg-amber-600 hover:bg-amber-700 text-white rounded-xl font-bold text-xs transition-all shadow-md active:scale-95"
                   >
-                    ยืนยันการสั่งซื้อ / นัดรับ
+                    ยืนยันการสั่งซื้อ
                   </button>
                 </div>
               )}
