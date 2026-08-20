@@ -1,9 +1,15 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import Image from 'next/image';
+import { motion } from 'framer-motion';
 import { useTheme } from 'next-themes';
-import { PlusCircle, Search, Moon, Sun, ShoppingBag, Heart } from 'lucide-react';
+import { Search, Moon, Sun, ShoppingBag, Heart, Sparkles } from 'lucide-react';
+import ExperimentalNav from '@/components/ExperimentalNav';
+
+// โหลด Canvas3D แบบ Dynamic (Client-Side Only)
+const Canvas3D = dynamic(() => import('@/components/Canvas3D'), { ssr: false });
 
 const SAMPLE_PRODUCTS = [
   { 
@@ -57,15 +63,15 @@ export default function Home() {
   const { theme, setTheme } = useTheme();
 
   return (
-    <div className="max-w-md md:max-w-4xl mx-auto min-h-screen pb-24 px-4 pt-4">
-      {/* Header Bar */}
+    <div className="max-w-md md:max-w-4xl mx-auto min-h-screen pb-32 px-4 pt-4">
+      {/* Header */}
       <header className="flex items-center justify-between py-2">
         <div>
           <h1 className="text-xl font-bold flex items-center gap-2">
             <ShoppingBag className="text-indigo-600 dark:text-indigo-400" size={24} />
-            Campus Market
+            Campus Market <span className="text-[10px] bg-indigo-500/10 text-indigo-500 px-2 py-0.5 rounded-full border border-indigo-500/20">3D Edition</span>
           </h1>
-          <p className="text-xs text-slate-500 dark:text-slate-400">แหล่งซื้อขายในวิทยาลัย</p>
+          <p className="text-xs text-slate-500 dark:text-slate-400">ตลาดซื้อขายยุคใหม่ในวิทยาลัย</p>
         </div>
 
         <button 
@@ -81,41 +87,41 @@ export default function Home() {
         <Search className="absolute left-3.5 top-3 text-slate-400" size={18} />
         <input 
           type="text" 
-          placeholder="ค้นหาสินค้า, ชีทเรียน, อุปกรณ์..." 
+          placeholder="ค้นหาสินค้าด้วย AI หรือคีย์เวิร์ด..." 
           className="w-full pl-10 pr-4 py-2.5 rounded-2xl bg-slate-200/50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 focus:outline-none focus:ring-2 focus:ring-indigo-500 text-sm"
         />
       </div>
 
-      {/* Quick Action Banner */}
-      <div className="my-4 p-4 rounded-3xl bg-gradient-to-r from-indigo-600 to-violet-600 text-white shadow-lg flex items-center justify-between">
-        <div>
-          <h2 className="font-bold text-base">มีของไม่ได้ใช้ไหม?</h2>
-          <p className="text-xs text-indigo-100 opacity-90">ส่งต่อให้เพื่อนๆ ในมหาลัยได้ง่ายๆ</p>
-        </div>
-        <Link 
-          href="/product" 
-          className="bg-white text-indigo-600 text-xs font-bold px-3.5 py-2.5 rounded-xl shadow hover:bg-indigo-50 transition-all flex items-center gap-1"
-        >
-          <PlusCircle size={16} /> ลงขายเลย
-        </Link>
+      {/* 3D Immersive Hero Section */}
+      <div className="my-5">
+        <Canvas3D />
       </div>
 
-      {/* Product Feed Grid */}
+      {/* Product Feed Grid with 3D Card Hover Effects */}
       <section className="mt-6">
-        <h2 className="font-bold text-base mb-3">สินค้ามาใหม่ (5 รายการล่าสุด)</h2>
+        <div className="flex items-center justify-between mb-3">
+          <h2 className="font-bold text-base flex items-center gap-1.5">
+            <Sparkles size={18} className="text-indigo-500" />
+            สินค้ามาใหม่
+          </h2>
+        </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
           {SAMPLE_PRODUCTS.map((product) => (
-            <div key={product.id} className="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 rounded-2xl p-3 shadow-sm flex flex-col justify-between overflow-hidden">
+            <motion.div 
+              key={product.id}
+              whileHover={{ y: -6, scale: 1.02, rotateX: 2, rotateY: -2 }}
+              transition={{ type: 'spring', stiffness: 300 }}
+              className="bg-white dark:bg-slate-900 border border-slate-200/60 dark:border-slate-800 rounded-2xl p-3 shadow-md hover:shadow-2xl transition-all duration-300 flex flex-col justify-between overflow-hidden"
+            >
               <div>
-                {/* Product Image Container */}
                 <div className="relative h-36 w-full rounded-xl mb-2.5 overflow-hidden bg-slate-100 dark:bg-slate-800">
                   <Image
                     src={product.image}
                     alt={product.title}
                     fill
                     unoptimized
-                    className="object-cover hover:scale-105 transition-transform duration-300"
+                    className="object-cover"
                   />
                   <button className="absolute top-2 right-2 p-1.5 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md rounded-full text-slate-600 dark:text-slate-300 hover:text-red-500 transition-colors">
                     <Heart size={14} />
@@ -135,22 +141,13 @@ export default function Home() {
                   <span>{product.time}</span>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </section>
 
-      {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white/80 dark:bg-slate-950/80 backdrop-blur-md border-t border-slate-200 dark:border-slate-800 max-w-md mx-auto md:max-w-4xl px-8 py-3 flex justify-around items-center z-50">
-        <Link href="/" className="flex flex-col items-center text-indigo-600 dark:text-indigo-400 font-semibold text-xs">
-          <ShoppingBag size={20} />
-          <span>หน้าหลัก</span>
-        </Link>
-        <Link href="/product" className="flex flex-col items-center text-slate-400 hover:text-indigo-600 text-xs">
-          <PlusCircle size={20} />
-          <span>เพิ่มสินค้า</span>
-        </Link>
-      </nav>
+      {/* Floating Experimental Navigation */}
+      <ExperimentalNav />
     </div>
   );
 }
