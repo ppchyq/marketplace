@@ -17,34 +17,59 @@ function Product3DModel({ category }: { category?: string }) {
     meshRef.current.rotation.y = t * 0.5;
   });
 
-  // สร้างรูปทรง 3D แตกต่างกันตามประเภทสินค้า
-  if (category === 'หนังสือเรียน' || category === 'ไอที/เครื่องใช้ไฟฟ้า') {
+  // 1. หนังสือเรียน (หนังสือ Calculus)
+  if (category === 'หนังสือเรียน') {
     return (
       <Float speed={2} rotationIntensity={1} floatIntensity={1.5}>
         <mesh ref={meshRef}>
-          <boxGeometry args={[1.6, 2.2, 0.3]} />
-          <MeshWobbleMaterial color="#818cf8" factor={0.1} speed={1} roughness={0.2} metalness={0.5} />
+          <boxGeometry args={[1.4, 1.8, 0.3]} />
+          <MeshWobbleMaterial color="#3b82f6" factor={0.05} speed={1} roughness={0.3} metalness={0.1} />
         </mesh>
       </Float>
     );
   }
 
+  // 2. เสื้อผ้า/ยูนิฟอร์ม (เสื้อกาวน์, รองเท้า Nike, กระเป๋า Anello)
   if (category === 'เสื้อผ้า/ยูนิฟอร์ม') {
     return (
-      <Float speed={2} rotationIntensity={1} floatIntensity={1.5}>
+      <Float speed={2.5} rotationIntensity={1.2} floatIntensity={1.5}>
         <mesh ref={meshRef}>
-          <cylinderGeometry args={[0.8, 1.2, 1.8, 32]} />
-          <MeshWobbleMaterial color="#34d399" factor={0.2} speed={1.5} roughness={0.5} />
+          <cylinderGeometry args={[0.8, 1.1, 1.6, 32]} />
+          <MeshWobbleMaterial color="#ec4899" factor={0.15} speed={1.5} roughness={0.4} />
         </mesh>
       </Float>
     );
   }
 
+  // 3. ไอที/เครื่องใช้ไฟฟ้า (iPad Air 4, หูฟัง Sony, คีย์บอร์ด RGB)
+  if (category === 'ไอที/เครื่องใช้ไฟฟ้า') {
+    return (
+      <Float speed={2} rotationIntensity={1} floatIntensity={1.2}>
+        <RoundedBox ref={meshRef} args={[1.8, 1.2, 0.15]} radius={0.08} smoothness={4}>
+          <MeshWobbleMaterial color="#6366f1" factor={0.05} speed={1} roughness={0.1} metalness={0.8} />
+        </RoundedBox>
+      </Float>
+    );
+  }
+
+  // 4. อุปกรณ์การเรียน (เครื่องคิดเลข Casio, โคมไฟ LED)
+  if (category === 'อุปกรณ์การเรียน') {
+    return (
+      <Float speed={2} rotationIntensity={1.2} floatIntensity={1.5}>
+        <mesh ref={meshRef}>
+          <boxGeometry args={[1.0, 1.6, 0.2]} />
+          <MeshWobbleMaterial color="#10b981" factor={0.1} speed={1.2} roughness={0.2} metalness={0.3} />
+        </mesh>
+      </Float>
+    );
+  }
+
+  // 5. อื่นๆ / หน้า Hero Banner (จักรยาน และสินค้าทั่วไป)
   return (
     <Float speed={2} rotationIntensity={1.5} floatIntensity={2}>
       <mesh ref={meshRef}>
         <torusKnotGeometry args={[0.7, 0.25, 128, 32]} />
-        <MeshWobbleMaterial color="#6366f1" factor={0.3} speed={2} roughness={0.2} metalness={0.8} />
+        <MeshWobbleMaterial color="#8b5cf6" factor={0.2} speed={2} roughness={0.2} metalness={0.7} />
       </mesh>
     </Float>
   );
