@@ -510,37 +510,7 @@ export default function Home() {
           </div>
         </section>
 
-        {/* 3D / Image Showcase */}
-        <div className="my-6 sm:my-8 rounded-3xl overflow-hidden border border-slate-200 dark:border-slate-800 shadow-xl bg-white dark:bg-slate-900">
-          <div className="p-3 bg-slate-100/80 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
-            <div className="flex items-center gap-2 text-slate-800 dark:text-slate-200 text-xs font-bold">
-              <Sparkles size={16} className="text-cyan-500" /> โมเดลไฮไลต์ (Showcase View)
-            </div>
-            
-            <div className="flex bg-slate-200 dark:bg-slate-950 p-1 rounded-xl gap-1">
-              <button
-                onClick={() => setModelView('3d')}
-                className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold transition-all ${
-                  modelView === '3d'
-                    ? 'bg-cyan-500 text-white shadow-sm'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                }`}
-              >
-                <Box size={14} /> 3D Model
-              </button>
-              <button
-                onClick={() => setModelView('image')}
-                className={`flex items-center gap-1.5 px-3 py-1 rounded-lg text-xs font-bold transition-all ${
-                  modelView === 'image'
-                    ? 'bg-cyan-500 text-white shadow-sm'
-                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
-                }`}
-              >
-                <ImageIcon size={14} /> รูปภาพ
-              </button>
-            </div>
-          </div>
-
+       
           <div className="h-60 sm:h-72 w-full bg-slate-50 dark:bg-slate-950 flex items-center justify-center relative">
             {modelView === '3d' ? (
               <Canvas3D />
