@@ -406,91 +406,88 @@ export default function Home() {
 
       <div className="max-w-md md:max-w-6xl mx-auto px-3 sm:px-4 pt-4 sm:pt-6 relative z-10 w-full">
 
-       {/* Header Style แบบ Shopee */}
-        <header className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-50 -mx-3 sm:-mx-4 -mt-4 sm:-mt-6 mb-6">
+       {/* Responsive Header สไตล์ Shopee (คอม & มือถือ) */}
+        <header className="bg-gradient-to-r from-cyan-600 to-blue-600 dark:from-slate-900 dark:to-slate-900 border-b border-cyan-500/20 dark:border-slate-800 sticky top-0 z-50 -mx-3 sm:-mx-4 -mt-4 sm:-mt-6 mb-4 sm:mb-6 shadow-md transition-colors">
           
-          {/* ชั้นที่ 1: Top Bar (เมนูบนสุดย่อยๆ) */}
-          <div className="bg-slate-900 text-slate-300 text-[11px] py-1 px-4 sm:px-8 flex items-center justify-between">
+          {/* 💻 Top Bar (แสดงเฉพาะบนจอคอม md:flex) */}
+          <div className="hidden md:flex bg-cyan-700/50 dark:bg-slate-950/60 text-cyan-100 dark:text-slate-300 text-[11px] py-1 px-8 items-center justify-between border-b border-white/10">
             <div className="flex items-center gap-4">
-              <button onClick={() => setIsAddProductOpen(true)} className="hover:text-cyan-400 transition-colors">
-                เปิดร้านค้า / ลงขายสินค้า
+              <button onClick={() => setIsAddProductOpen(true)} className="hover:text-white transition-colors flex items-center gap-1">
+                <PlusCircle size={12} /> เปิดร้านค้า / ลงขายสินค้า
               </button>
-              <span className="text-slate-700">|</span>
-              <span className="text-slate-400">สำหรับนักศึกษามหาวิทยาลัย</span>
+              <span className="opacity-40">|</span>
+              <span className="opacity-80">ตลาดนัดซื้อ-ขาย สำหรับเด็กมหาลัย</span>
             </div>
 
             <div className="flex items-center gap-4">
-              <button onClick={() => setIsVoucherCenterOpen(true)} className="flex items-center gap-1 hover:text-cyan-400">
-                <Ticket size={12} className="text-amber-400" />
+              <button onClick={() => setIsVoucherCenterOpen(true)} className="flex items-center gap-1 hover:text-white">
+                <Ticket size={12} className="text-amber-300" />
                 <span>ศูนย์โค้ดส่วนลด</span>
               </button>
-              <button onClick={() => setIsHistoryOpen(true)} className="flex items-center gap-1 hover:text-cyan-400">
+              <button onClick={() => setIsHistoryOpen(true)} className="flex items-center gap-1 hover:text-white">
                 <History size={12} />
                 <span>ประวัติคำสั่งซื้อ</span>
               </button>
-              
-              {/* User Profile / Logout */}
-              <div className="flex items-center gap-2 pl-2 border-l border-slate-700">
-                <span className="text-cyan-400 font-bold">{currentUser.name}</span>
-                <button onClick={handleLogout} className="text-rose-400 hover:text-rose-300" title="ออกจากระบบ">
+
+              <div className="flex items-center gap-2 pl-2 border-l border-white/20">
+                <span className="font-bold text-white">{currentUser.name}</span>
+                <button onClick={handleLogout} className="text-rose-300 hover:text-rose-100" title="ออกจากระบบ">
                   <LogOut size={12} />
                 </button>
               </div>
             </div>
           </div>
 
-          {/* ชั้นที่ 2: Main Header (โลโก้ + ช่องค้นหาใหญ่ + ตะกร้า) */}
-          <div className="max-w-6xl mx-auto px-4 py-3.5 flex items-center justify-between gap-4 sm:gap-8">
+          {/* 📱 Main Header (ปรับโครงสร้างอัตโนมัติทั้งคอมและมือถือ) */}
+          <div className="max-w-6xl mx-auto px-3 sm:px-4 py-2.5 sm:py-3.5 flex items-center justify-between gap-2 sm:gap-6">
             
-            {/* โลโก้ฝั่งซ้าย */}
-            <div className="flex items-center gap-2.5 shrink-0 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-              <div className="p-2.5 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 text-white shadow-md">
-                <ShoppingBag size={24} />
+            {/* โลโก้ (ซ่อนชื่อบนมือถือ โชว์เฉพาะไอคอน) */}
+            <div className="flex items-center gap-2 shrink-0 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+              <div className="p-2 sm:p-2.5 rounded-xl bg-white text-cyan-600 shadow-md">
+                <ShoppingBag size={20} className="sm:w-6 sm:h-6" />
               </div>
-              <div className="hidden sm:block">
-                <h1 className="text-xl font-black tracking-tight text-slate-900 dark:text-white leading-none">
-                  CAMPUS NEXUS
-                </h1>
-                <span className="text-[10px] font-bold text-cyan-500 tracking-wider">NEXT-GEN MARKET</span>
+              <div className="hidden sm:block text-white">
+                <h1 className="text-lg sm:text-xl font-black tracking-tight leading-none">CAMPUS NEXUS</h1>
+                <span className="text-[9px] font-bold text-cyan-200 tracking-widest block mt-0.5">NEXT-GEN MARKET</span>
               </div>
             </div>
 
-            {/* ช่องค้นหาตรงกลางแบบ Shopee (เน้นเด่นๆ) */}
+            {/* ช่องค้นหาเด่นตรงกลาง (แบบ App Shopee บนมือถือ) */}
             <div className="flex-1 max-w-2xl relative">
               <div className="relative flex items-center">
+                <Search size={16} className="absolute left-3 text-slate-400 pointer-events-none" />
                 <input 
                   type="text" 
-                  placeholder="ค้นหาหนังสือเรียน, เสื้อกาวน์, อุปกรณ์การเรียน..." 
-                  className="w-full pl-4 pr-24 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all"
+                  placeholder="ค้นหาหนังสือ, เสื้อกาวน์..." 
+                  className="w-full pl-9 pr-10 sm:pr-20 py-2 sm:py-2.5 rounded-xl bg-white dark:bg-slate-800 text-slate-900 dark:text-white text-xs sm:text-sm focus:outline-none shadow-inner"
                 />
-                <button className="absolute right-1 px-4 py-1.5 bg-cyan-500 hover:bg-cyan-600 text-white font-bold text-xs rounded-lg transition-all flex items-center gap-1">
-                  <Search size={14} />
-                  <span className="hidden sm:inline">ค้นหา</span>
+                <button className="hidden sm:flex absolute right-1 px-3 py-1.5 bg-cyan-600 hover:bg-cyan-700 text-white font-bold text-xs rounded-lg transition-all items-center gap-1">
+                  ค้นหา
                 </button>
               </div>
             </div>
 
-            {/* ปุ่มฝั่งขวา (ตะกร้า + สลับโหมด) */}
-            <div className="flex items-center gap-3 shrink-0">
+            {/* ปุ่มฝั่งขวา (แชท/ตะกร้า/โหมดมืด) */}
+            <div className="flex items-center gap-1.5 sm:gap-3 shrink-0 text-white">
               
               {/* ปุ่มสลับ Theme */}
               {mounted && (
                 <button 
                   onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} 
-                  className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-all"
+                  className="p-2 rounded-xl bg-white/10 dark:bg-slate-800 hover:bg-white/20 transition-all"
                 >
-                  {theme === 'dark' ? <Sun size={18} className="text-amber-400" /> : <Moon size={18} className="text-indigo-500" />}
+                  {theme === 'dark' ? <Sun size={18} className="text-amber-400" /> : <Moon size={18} className="text-white" />}
                 </button>
               )}
 
-              {/* ปุ่มตะกร้าสินค้าแบบเด่น */}
+              {/* ปุ่มตะกร้า */}
               <button 
                 onClick={() => setIsCartOpen(true)} 
-                className="relative p-2.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 transition-all"
+                className="relative p-2 rounded-xl bg-white/10 dark:bg-slate-800 hover:bg-white/20 transition-all"
               >
-                <ShoppingCart size={22} />
+                <ShoppingCart size={20} />
                 {cart.length > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 bg-rose-500 text-white text-[10px] font-black h-5 w-5 rounded-full flex items-center justify-center ring-2 ring-white dark:ring-slate-900 animate-bounce">
+                  <span className="absolute -top-1 -right-1 bg-rose-500 text-white text-[9px] font-black h-4 w-4 rounded-full flex items-center justify-center ring-2 ring-cyan-600 dark:ring-slate-900">
                     {cart.reduce((sum, item) => sum + item.quantity, 0)}
                   </span>
                 )}
