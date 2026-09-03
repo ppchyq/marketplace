@@ -5,10 +5,11 @@ import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from 'next-themes';
 import { useState, useEffect } from 'react';
+// บรรทัดที่ 8 ถึง 13
 import { 
   Search, Moon, Sun, ShoppingBag, Sparkles, X, 
   MessageSquare, ShoppingCart, Trash2, Plus, Zap,
-  PlusCircle, CreditCard, QrCode, Wallet, CheckCircle2, MapPin, History, Send, Check, ArrowLeft, Minus, Loader2, Flame, Box, ImageIcon, UserCheck, LogOut, Lock, User
+  PlusCircle, CreditCard, QrCode, Wallet, CheckCircle2, MapPin, History, Send, Check, ArrowLeft, Minus, Loader2, Flame, Box, ImageIcon, UserCheck, LogOut, Lock, User, Ticket
 } from 'lucide-react';
 
 const Canvas3D = dynamic(() => import('@/components/Canvas3D'), { ssr: false });
