@@ -1,19 +1,23 @@
-@import "tailwindcss";
+ @import "tailwindcss";
 
-@layer base {
-  :root {
-    --background: #ffffff;
-    --foreground: #0f172a;
-  }
+/* 1. บอกให้ Tailwind v4 รู้จัก Class .dark */
+@custom-variant dark (&:where(.dark, .dark *));
 
-  .dark {
-    --background: #020617;
-    --foreground: #f8fafc;
-  }
+/* 2. กำหนดค่าตัวแปร CSS */
+:root {
+  --background: #ffffff;
+  --foreground: #0f172a;
 }
 
+.dark {
+  --background: #020617;
+  --foreground: #f8fafc;
+}
+
+/* 3. ดึงค่าตัวแปรมาใช้งาน */
 body {
   background-color: var(--background);
   color: var(--foreground);
   font-family: var(--font-geist-sans), sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
