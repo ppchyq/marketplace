@@ -8,8 +8,9 @@ import { useState, useEffect } from 'react';
 // บรรทัดที่ 8 ถึง 13
 import { 
   Search, Moon, Sun, ShoppingBag, Sparkles, X, 
-  MessageSquare, ShoppingCart, Trash2, Plus, Zap,
-  PlusCircle, CreditCard, QrCode, Wallet, CheckCircle2, MapPin, History, Send, Check, ArrowLeft, Minus, Loader2, Flame, Box, ImageIcon, UserCheck, LogOut, Lock, User, Ticket
+  MessageSquare, ShoppingCart, Trash2, Plus, Zap, 
+  PlusCircle, CreditCard, QrCode, Wallet, CheckCircle2, MapPin, History, Send, ChevronRight,
+  Ticket, Store, User, Package, Truck, Star, Home as HomeIcon
 } from 'lucide-react';
 
 const Canvas3D = dynamic(() => import('@/components/Canvas3D'), { ssr: false });
@@ -1084,7 +1085,7 @@ export default function Home() {
     onClick={() => setActiveTab('home')}
     className={`flex flex-col items-center gap-1 ${activeTab === 'home' ? 'text-cyan-500 font-bold' : 'text-slate-400'}`}
   >
-    <Home size={20} />
+   <HomeIcon size={20} />
     <span className="text-[10px]">หน้าแรก</span>
   </button>
 
