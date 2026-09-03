@@ -406,74 +406,97 @@ export default function Home() {
 
       <div className="max-w-md md:max-w-6xl mx-auto px-3 sm:px-4 pt-4 sm:pt-6 relative z-10 w-full">
 
-        {/* Header */}
-        <header className="flex items-center justify-between p-2.5 sm:p-4 rounded-2xl sm:rounded-3xl bg-white/80 dark:bg-slate-900/80 backdrop-blur-2xl border border-slate-200/80 dark:border-slate-800/80 shadow-lg shadow-slate-200/40 dark:shadow-none sticky top-2 sm:top-4 z-40 w-full">
+       {/* Header Style แบบ Shopee */}
+        <header className="bg-white dark:bg-slate-900 border-b border-slate-200 dark:border-slate-800 sticky top-0 z-50 -mx-3 sm:-mx-4 -mt-4 sm:-mt-6 mb-6">
           
-          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-            <div className="p-2 sm:p-3 rounded-xl sm:rounded-2xl bg-gradient-to-tr from-cyan-500 via-blue-600 to-indigo-600 text-white shadow-md shadow-cyan-500/25 ring-2 ring-white/20 shrink-0">
-              <ShoppingBag size={18} className="sm:w-[22px] sm:h-[22px]" />
+          {/* ชั้นที่ 1: Top Bar (เมนูบนสุดย่อยๆ) */}
+          <div className="bg-slate-900 text-slate-300 text-[11px] py-1 px-4 sm:px-8 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <button onClick={() => setIsAddProductOpen(true)} className="hover:text-cyan-400 transition-colors">
+                เปิดร้านค้า / ลงขายสินค้า
+              </button>
+              <span className="text-slate-700">|</span>
+              <span className="text-slate-400">สำหรับนักศึกษามหาวิทยาลัย</span>
             </div>
-            <div className="truncate">
-              <span className="text-[8px] sm:text-[10px] font-black tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-blue-500 block">NEXT-GEN MARKET</span>
-              <h1 className="text-sm sm:text-xl font-black tracking-tighter bg-clip-text text-transparent bg-gradient-to-r from-slate-900 via-slate-800 to-slate-600 dark:from-white dark:via-slate-200 dark:to-slate-400 truncate">
-                CAMPUS NEXUS
-              </h1>
+
+            <div className="flex items-center gap-4">
+              <button onClick={() => setIsVoucherCenterOpen(true)} className="flex items-center gap-1 hover:text-cyan-400">
+                <Ticket size={12} className="text-amber-400" />
+                <span>ศูนย์โค้ดส่วนลด</span>
+              </button>
+              <button onClick={() => setIsHistoryOpen(true)} className="flex items-center gap-1 hover:text-cyan-400">
+                <History size={12} />
+                <span>ประวัติคำสั่งซื้อ</span>
+              </button>
+              
+              {/* User Profile / Logout */}
+              <div className="flex items-center gap-2 pl-2 border-l border-slate-700">
+                <span className="text-cyan-400 font-bold">{currentUser.name}</span>
+                <button onClick={handleLogout} className="text-rose-400 hover:text-rose-300" title="ออกจากระบบ">
+                  <LogOut size={12} />
+                </button>
+              </div>
             </div>
           </div>
 
-          <div className="flex items-center gap-1 sm:gap-2 shrink-0">
+          {/* ชั้นที่ 2: Main Header (โลโก้ + ช่องค้นหาใหญ่ + ตะกร้า) */}
+          <div className="max-w-6xl mx-auto px-4 py-3.5 flex items-center justify-between gap-4 sm:gap-8">
             
-            {/* แสดงโปรไฟล์ผู้ใช้ปัจจุบัน */}
-            <div className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 bg-slate-100 dark:bg-slate-800 rounded-xl border border-slate-200 dark:border-slate-700 text-xs font-bold text-cyan-600 dark:text-cyan-400">
-              <UserCheck size={14} />
-              <span>{currentUser.name}</span>
+            {/* โลโก้ฝั่งซ้าย */}
+            <div className="flex items-center gap-2.5 shrink-0 cursor-pointer" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+              <div className="p-2.5 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 text-white shadow-md">
+                <ShoppingBag size={24} />
+              </div>
+              <div className="hidden sm:block">
+                <h1 className="text-xl font-black tracking-tight text-slate-900 dark:text-white leading-none">
+                  CAMPUS NEXUS
+                </h1>
+                <span className="text-[10px] font-bold text-cyan-500 tracking-wider">NEXT-GEN MARKET</span>
+              </div>
             </div>
 
-            <button 
-              onClick={() => setIsVoucherCenterOpen(true)}
-              className="flex items-center gap-1 p-2 sm:px-3.5 sm:py-2.5 rounded-xl sm:rounded-2xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-600 dark:text-amber-400 font-bold text-xs border border-amber-500/20 transition-all active:scale-95"
-            >
-              <Ticket size={16} className="animate-bounce" />
-              <span className="hidden sm:inline">ส่วนลด</span>
-            </button>
+            {/* ช่องค้นหาตรงกลางแบบ Shopee (เน้นเด่นๆ) */}
+            <div className="flex-1 max-w-2xl relative">
+              <div className="relative flex items-center">
+                <input 
+                  type="text" 
+                  placeholder="ค้นหาหนังสือเรียน, เสื้อกาวน์, อุปกรณ์การเรียน..." 
+                  className="w-full pl-4 pr-24 py-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-all"
+                />
+                <button className="absolute right-1 px-4 py-1.5 bg-cyan-500 hover:bg-cyan-600 text-white font-bold text-xs rounded-lg transition-all flex items-center gap-1">
+                  <Search size={14} />
+                  <span className="hidden sm:inline">ค้นหา</span>
+                </button>
+              </div>
+            </div>
 
-            <button onClick={() => setIsHistoryOpen(true)} className="p-2 sm:p-2.5 rounded-xl sm:rounded-2xl bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all border border-slate-200/60 dark:border-slate-700/60 text-slate-700 dark:text-slate-300">
-              <History size={16} />
-            </button>
-
-            <button onClick={() => setIsAddProductOpen(true)} className="flex items-center gap-1 p-2 sm:px-4 sm:py-2.5 rounded-xl sm:rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-black text-xs shadow-md shadow-cyan-500/20 hover:shadow-cyan-500/30 active:scale-95 transition-all">
-              <PlusCircle size={16} />
-              <span className="hidden sm:inline">ลงขาย</span>
-            </button>
-
-            <button onClick={() => setIsCartOpen(true)} className="relative p-2 sm:p-2.5 rounded-xl sm:rounded-2xl bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all border border-slate-200/60 dark:border-slate-700/60 text-slate-700 dark:text-slate-300">
-              <ShoppingCart size={16} />
-              {cart.length > 0 && (
-                <span className="absolute -top-1 -right-1 bg-gradient-to-r from-pink-500 to-rose-500 text-white text-[9px] font-black h-4 w-4 rounded-full flex items-center justify-center shadow-md ring-2 ring-white dark:ring-slate-900 animate-pulse">
-                  {cart.reduce((sum, item) => sum + item.quantity, 0)}
-                </span>
+            {/* ปุ่มฝั่งขวา (ตะกร้า + สลับโหมด) */}
+            <div className="flex items-center gap-3 shrink-0">
+              
+              {/* ปุ่มสลับ Theme */}
+              {mounted && (
+                <button 
+                  onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} 
+                  className="p-2.5 rounded-xl bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-all"
+                >
+                  {theme === 'dark' ? <Sun size={18} className="text-amber-400" /> : <Moon size={18} className="text-indigo-500" />}
+                </button>
               )}
-            </button>
 
-            {/* ปุ่มสลับ Light / Dark Mode */}
-            {mounted && (
+              {/* ปุ่มตะกร้าสินค้าแบบเด่น */}
               <button 
-                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} 
-                className="p-2 sm:p-2.5 rounded-xl sm:rounded-2xl bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all border border-slate-200/60 dark:border-slate-700/60 active:scale-95"
-                title="สลับโหมดมืด/สว่าง"
+                onClick={() => setIsCartOpen(true)} 
+                className="relative p-2.5 rounded-xl bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-600 dark:text-cyan-400 transition-all"
               >
-                {theme === 'dark' ? (
-                  <Sun size={16} className="text-amber-400" />
-                ) : (
-                  <Moon size={16} className="text-indigo-600" />
+                <ShoppingCart size={22} />
+                {cart.length > 0 && (
+                  <span className="absolute -top-1.5 -right-1.5 bg-rose-500 text-white text-[10px] font-black h-5 w-5 rounded-full flex items-center justify-center ring-2 ring-white dark:ring-slate-900 animate-bounce">
+                    {cart.reduce((sum, item) => sum + item.quantity, 0)}
+                  </span>
                 )}
               </button>
-            )}
+            </div>
 
-            {/* ปุ่มออกจากระบบ */}
-            <button onClick={handleLogout} className="p-2 sm:p-2.5 rounded-xl sm:rounded-2xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-500 transition-all border border-rose-500/20" title="ออกจากระบบ">
-              <LogOut size={16} />
-            </button>
           </div>
         </header>
 
