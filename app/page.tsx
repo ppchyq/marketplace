@@ -10,7 +10,7 @@ import {
   Search, Moon, Sun, ShoppingBag, Sparkles, X, 
   MessageSquare, ShoppingCart, Trash2, Plus, Zap, 
   PlusCircle, CreditCard, QrCode, Wallet, CheckCircle2, MapPin, History, Send, ChevronRight,
-  Ticket, Store, User, Package, Truck, Star, Home as HomeIcon
+  Ticket, Store, User, Package, Truck, Star, Home as HomeIcon, Lock
 } from 'lucide-react';
 
 const Canvas3D = dynamic(() => import('@/components/Canvas3D'), { ssr: false });
