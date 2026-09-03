@@ -529,6 +529,54 @@ export default function Home() {
             </div>
           </div>
         </section>
+        {/* เมนูด่วนสไตล์ Shopee (Shortcut Grid) */}
+        <div className="grid grid-cols-4 gap-2 sm:gap-4 my-6 p-3 sm:p-5 bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm">
+          
+          {/* 1. ปุ่มลงขายสินค้า */}
+          <button 
+            onClick={() => setIsAddProductOpen(true)}
+            className="flex flex-col items-center gap-1.5 group active:scale-95 transition-transform"
+          >
+            <div className="p-2.5 sm:p-3.5 rounded-2xl bg-gradient-to-tr from-cyan-500 to-blue-600 text-white shadow-md shadow-cyan-500/20 group-hover:scale-105 transition-transform">
+              <PlusCircle size={22} />
+            </div>
+            <span className="text-[10px] sm:text-xs font-bold text-slate-700 dark:text-slate-200">ลงขายสินค้า</span>
+          </button>
+
+          {/* 2. ปุ่มเก็บโค้ดส่วนลด */}
+          <button 
+            onClick={() => setIsVoucherCenterOpen(true)}
+            className="flex flex-col items-center gap-1.5 group active:scale-95 transition-transform"
+          >
+            <div className="p-2.5 sm:p-3.5 rounded-2xl bg-amber-500 text-white shadow-md shadow-amber-500/20 group-hover:scale-105 transition-transform">
+              <Ticket size={22} />
+            </div>
+            <span className="text-[10px] sm:text-xs font-bold text-slate-700 dark:text-slate-200">เก็บโค้ดลด</span>
+          </button>
+
+          {/* 3. ปุ่มประวัติสั่งซื้อ */}
+          <button 
+            onClick={() => setIsHistoryOpen(true)}
+            className="flex flex-col items-center gap-1.5 group active:scale-95 transition-transform"
+          >
+            <div className="p-2.5 sm:p-3.5 rounded-2xl bg-indigo-500 text-white shadow-md shadow-indigo-500/20 group-hover:scale-105 transition-transform">
+              <History size={22} />
+            </div>
+            <span className="text-[10px] sm:text-xs font-bold text-slate-700 dark:text-slate-200">ประวัติสั่งซื้อ</span>
+          </button>
+
+          {/* 4. ปุ่มแชทช่วยเหลือ */}
+          <button 
+            onClick={() => openChatWithSeller('ระบบช่วยเหลือ', 'สอบถามการใช้งาน')}
+            className="flex flex-col items-center gap-1.5 group active:scale-95 transition-transform"
+          >
+            <div className="p-2.5 sm:p-3.5 rounded-2xl bg-emerald-500 text-white shadow-md shadow-emerald-500/20 group-hover:scale-105 transition-transform">
+              <MessageSquare size={22} />
+            </div>
+            <span className="text-[10px] sm:text-xs font-bold text-slate-700 dark:text-slate-200">แชทสอบถาม</span>
+          </button>
+
+        </div>
 
        
           <div className="h-60 sm:h-72 w-full bg-slate-50 dark:bg-slate-950 flex items-center justify-center relative">
@@ -1027,6 +1075,14 @@ export default function Home() {
         </AnimatePresence>
 
       </div>
+      {/* ปุ่มลงขายแบบลอยมุมขวาล่าง (FAB) */}
+        <button 
+          onClick={() => setIsAddProductOpen(true)}
+          className="fixed bottom-6 right-6 z-40 sm:hidden flex items-center gap-2 px-4 py-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-black text-xs rounded-full shadow-2xl active:scale-90 transition-transform border-2 ring-2 ring-white/20"
+        >
+          <PlusCircle size={20} />
+          <span>ลงขาย</span>
+        </button>
     </div>
   );
 }
