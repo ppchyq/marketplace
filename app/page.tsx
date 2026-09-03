@@ -8,7 +8,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { 
   Search, Moon, Sun, ShoppingBag, Sparkles, X, 
-  MessageSquare, ShoppingCart, Trash2, Eye, Plus, ShieldCheck, Zap, SlidersHorizontal
+  MessageSquare, ShoppingCart, Trash2, Eye, Plus, ShieldCheck, Zap, SlidersHorizontal,
+  PlusCircle, CreditCard, QrCode, Wallet, CheckCircle2, Upload
 } from 'lucide-react';
 
 const Canvas3D = dynamic(() => import('@/components/Canvas3D'), { ssr: false });
@@ -33,42 +34,39 @@ interface CartItem extends Product {
   quantity: number;
 }
 
-const SAMPLE_PRODUCTS: Product[] = [
+const INITIAL_PRODUCTS: Product[] = [
   { id: 1, title: 'หนังสือ Calculus II สภาพ 95%', price: 180, category: 'หนังสือเรียน', location: 'ตึกวิศวะ', time: '10 นาทีที่แล้ว', image: 'https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?auto=format&fit=crop&w=600&q=80', description: 'หนังสือแคลคูลัส 2 สภาพดีมาก ไม่มีรอยขีดเขียน มีสรุปสูตรสำคัญแถมให้ในเล่ม', seller: 'พี่นก (วิศวะ ปี 3)', sellerStatus: 'ออนไลน์อยู่', sellerResponseRate: 'ตอบไวภายใน 5 นาที', condition: 'มือสอง (สภาพ 95%)', isHot: true },
-  
-  // อัปเดตรูปเสื้อกาวน์ปฏิบัติการ (รูปตรงปก ชัดเจน)
   { id: 2, title: 'เสื้อกาวน์ปฏิบัติการ Size L', price: 250, category: 'เสื้อผ้า/ยูนิฟอร์ม', location: 'ตึกวิทยาศาสตร์', time: '30 นาทีที่แล้ว', image: 'https://images.unsplash.com/photo-1516549655169-df83a0774514?auto=format&fit=crop&w=600&q=80', description: 'เสื้อกาวน์แล็ปแขนยาว ผ้าหนาปานกลาง ซักสะอาดเรียบร้อย ใส่ไปแล็ปแค่ 3 ครั้ง', seller: 'กิ๊ฟ (สหเวช ปี 2)', sellerStatus: 'ใช้งานล่าสุด 15 นาทีที่แล้ว', sellerResponseRate: 'ตอบภายใน 15 นาที', condition: 'มือสอง (สภาพ 98%)' },
-  
   { id: 3, title: 'iPad Air 4 64GB WiFi (มีรอยนิดหน่อย)', price: 9500, category: 'ไอที/เครื่องใช้ไฟฟ้า', location: 'หอพักใน', time: '1 ชม. ที่แล้ว', image: 'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?auto=format&fit=crop&w=600&q=80', description: 'ใช้งานได้ปกติทุกฟังก์ชั่น สแกนนิ้วติด แบตอึด 88% แถมเคสให้ด้วยครับ', seller: 'มาร์ค (ไอซีที ปี 4)', sellerStatus: 'ออนไลน์อยู่', sellerResponseRate: 'ตอบไวภายใน 2 นาที', condition: 'มือสอง (มีรอยตามการใช้งาน)', isHot: true },
-  
-  // อัปเดตรูปเครื่องคิดเลขวิทยาศาสตร์ (รูปตรงปก ชัดเจน)
   { id: 4, title: 'เครื่องคิดเลขวิทยาศาสตร์ Casio FX-991EX', price: 400, category: 'อุปกรณ์การเรียน', location: 'โรงอาหารกลาง', time: '2 ชม. ที่แล้ว', image: 'https://images.unsplash.com/photo-1594980596870-8aa52a78d8cd?auto=format&fit=crop&w=600&q=80', description: 'รุ่นยอดฮิตสอบผ่านสบาย ปุ่มกดตอบสนองดี หน้าจอใสไม่มีรอย แถมฝาครอบแท้', seller: 'แบงค์ (บัญชี ปี 2)', sellerStatus: 'ใช้งานล่าสุด 1 ชม. ที่แล้ว', sellerResponseRate: 'ตอบภายใน 30 นาที', condition: 'มือสอง (สภาพดี)' },
-  
   { id: 5, title: 'จักรยานปั่นในมหาลัย สภาพพร้อมใช้งาน', price: 1200, category: 'อื่นๆ', location: 'ลานจอดรถตึกกิจกรรม', time: '3 ชม. ที่แล้ว', image: 'https://images.unsplash.com/photo-1485965120184-e220f721d03e?auto=format&fit=crop&w=600&q=80', description: 'ปั่นไปเรียนสะดวกมาก เบรกทำงานได้ปกติ ยางเพิ่งเปลี่ยนใหม่เดือนที่แล้ว', seller: 'ตั้ม (เกษตร ปี 3)', sellerStatus: 'ออนไลน์อยู่', sellerResponseRate: 'ตอบไวภายใน 10 นาที', condition: 'มือสองพร้อมใช้งาน' },
   { id: 6, title: 'หูฟังไร้สาย Sony WH-1000XM4', price: 4800, category: 'ไอที/เครื่องใช้ไฟฟ้า', location: 'หอพักนอก (ประตู 2)', time: '4 ชม. ที่แล้ว', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=600&q=80', description: 'หูฟังตัดเสียงรบกวนระดับท็อป ใส่ อ่านหนังสือในห้องสมุดเงียบกริบ แบตเตอรี่ยังอึด', seller: 'เจมส์ (สถาปัตย์ ปี 4)', sellerStatus: 'ออนไลน์อยู่', sellerResponseRate: 'ตอบไวภายใน 5 นาที', condition: 'มือสอง (สภาพ 90%)', isHot: true },
-  { id: 7, title: 'โคมไฟอ่านหนังสือ LED ถนอมสายตา', price: 190, category: 'อุปกรณ์การเรียน', location: 'หอพักใน ตึก 4', time: '5 ชม. ที่แล้ว', image: 'https://images.unsplash.com/photo-1534073828943-f801091bb18c?auto=format&fit=crop&w=600&q=80', description: 'โคมไฟตั้งโต๊ะเสียบ USB หรือใช้แบตในตัวได้ ปรับระดับความสว่างได้ 3 ระดับ', seller: 'พลอย (มนุษยศาสตร์ ปี 1)', sellerStatus: 'ใช้งานล่าสุด 3 ชม. ที่แล้ว', sellerResponseRate: 'ตอบภายใน 1 ชม.', condition: 'ของใหม่ไม่ได้ใช้งาน' },
-  { id: 8, title: 'รองเท้า Sneaker Nike Air Force 1 (Size 42)', price: 1500, category: 'เสื้อผ้า/ยูนิฟอร์ม', location: 'หน้ามหาลัย', time: '6 ชม. ที่แล้ว', image: 'https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=600&q=80', description: 'รองเท้าผ้าใบสีขาวทรงคลาสสิก ใส่เรียนใส่เที่ยวได้ ส้นยังไม่สึก ซักทำความสะอาดแล้ว', seller: 'บาส (บริหาร ปี 3)', sellerStatus: 'ออนไลน์อยู่', sellerResponseRate: 'ตอบไวภายใน 5 นาที', condition: 'มือสอง (สภาพ 88%)' },
-  { id: 9, title: 'กระเป๋าเป้ Anello ใส่โน้ตบุ๊ก 15 นิ้ว', price: 450, category: 'เสื้อผ้า/ยูนิฟอร์ม', location: 'ศูนย์หนังสือมหาลัย', time: '8 ชม. ที่แล้ว', image: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=600&q=80', description: 'กระเป๋าเป้สะพายหลังสีน้ำเงินเข้ม จุของได้เยอะมาก มีช่องใส่โน้ตบุ๊กกันกระแทก', seller: 'เมย์ (ครุศาสตร์ ปี 2)', sellerStatus: 'ใช้งานล่าสุด 2 ชม. ที่แล้ว', sellerResponseRate: 'ตอบภายใน 20 นาที', condition: 'มือสอง (สภาพดี)' },
-  { id: 10, title: 'คีย์บอร์ดกลไก Mechanical RGB', price: 890, category: 'ไอที/เครื่องใช้ไฟฟ้า', location: 'ตึกวิศวะคอม', time: '12 ชม. ที่แล้ว', image: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?auto=format&fit=crop&w=600&q=80', description: 'Red Switch เสียงพิมพ์นุ่มมือ ไม่รบกวนคนอื่น ไฟ RGB ปรับได้หลายโหมด', seller: 'นนท์ (วิศวะคอม ปี 2)', sellerStatus: 'ออนไลน์อยู่', sellerResponseRate: 'ตอบไวภายใน 1 นาที', condition: 'มือสอง (สภาพ 95%)' },
-  { id: 11, title: 'MacBook Air M1 RAM 8GB SSD 256GB', price: 18500, category: 'ไอที/เครื่องใช้ไฟฟ้า', location: 'หอพักใน ตึก 2', time: '14 ชม. ที่แล้ว', image: 'https://images.unsplash.com/photo-1611186871348-b1ce696e52c9?auto=format&fit=crop&w=600&q=80', description: 'สภาพนางฟ้า แบตเตอรี Health 92% กล่องอุปกรณ์ครบ ใช้ทำรายงานและตัดต่อเบาๆ', seller: 'เคท (นิเทศ ปี 3)', sellerStatus: 'ออนไลน์อยู่', sellerResponseRate: 'ตอบไวภายใน 3 นาที', condition: 'มือสอง (สภาพ 96%)', isHot: true },
-  { id: 12, title: 'แก้วเก็บความเย็น Yeti 30 oz ลายคลาสสิก', price: 220, category: 'อุปกรณ์การเรียน', location: 'โรงอาหารตึกกลาง', time: '15 ชม. ที่แล้ว', image: 'https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=600&q=80', description: 'เก็บความเย็นได้ข้ามคืน ไม่มีน้ำเกาะข้างแก้ว มีหลอดสแตนเลสให้', seller: 'อาร์ม (วิศวะ ปี 1)', sellerStatus: 'ใช้งานล่าสุด 30 นาทีที่แล้ว', sellerResponseRate: 'ตอบภายใน 10 นาที', condition: 'สภาพดีเยี่ยม' },
-  { id: 13, title: 'เมาส์ไร้สาย Logitech MX Master 3S', price: 2600, category: 'ไอที/เครื่องใช้ไฟฟ้า', location: 'ห้องสำนักหอสมุด', time: '18 ชม. ที่แล้ว', image: 'https://images.unsplash.com/photo-1615663245857-ac93bb7c39e7?auto=format&fit=crop&w=600&q=80', description: 'เมาส์เพื่อสุขภาพ เสียงคลิกเงียบมาก เชื่อมต่อได้ 3 เครื่องพร้อมกัน', seller: 'พีท (ไอที ปี 4)', sellerStatus: 'ออนไลน์อยู่', sellerResponseRate: 'ตอบไวภายใน 5 นาที', condition: 'มือสอง (สภาพ 92%)' },
-  { id: 14, title: 'กระดานวาดรูปต่อคอม Wacom Intuos', price: 1350, category: 'อุปกรณ์การเรียน', location: 'ตึกศิลปกรรม', time: '1 วันที่แล้ว', image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=600&q=80', description: 'เหมาะสำหรับสายวาดและไดคัทงาน ปากกาไม่ต้องชาร์จไฟ แถมหัวปากกาสำรอง 3 หัว', seller: 'ฝน (วิจิตรศิลป์ ปี 2)', sellerStatus: 'ใช้งานล่าสุด 4 ชม. ที่แล้ว', sellerResponseRate: 'ตอบภายใน 30 นาที', condition: 'มือสอง (สภาพดี)' },
-  { id: 15, title: 'กล้องฟิล์ม Olympus OM-1 พร้อมเลนส์ 50mm', price: 4200, category: 'อื่นๆ', location: 'ลานไทรหน้ามหาลัย', time: '1 วันที่แล้ว', image: 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=600&q=80', description: 'กล้องฟิล์มคลาสสิกทำงานเต็มระบบ สปีดชัตเตอร์ตรง เลนส์ใสไม่มีราไม่มีฝ้า', seller: 'ปอนด์ (นิเทศ ปี 4)', sellerStatus: 'ออนไลน์อยู่', sellerResponseRate: 'ตอบไวภายใน 10 นาที', condition: 'มือสอง (Vintage Classic)' },
-  { id: 16, title: 'ชุดพับโต๊ะญี่ปุ่นไม้แท้ + เก้าอี้เบาะนุ่ม', price: 350, category: 'อื่นๆ', location: 'หอพักนอก ประตู 3', time: '1 วันที่แล้ว', image: 'https://images.unsplash.com/photo-1538688525198-9b88f6f53126?auto=format&fit=crop&w=600&q=80', description: 'โต๊ะไม้พับเก็บได้ ขาแข็งแรงไม่โยก เหมาะกับนั่งอ่านหนังสือบนเตียงหรือพื้น', seller: 'ตูน (เศรษฐศาสตร์ ปี 2)', sellerStatus: 'ใช้งานล่าสุด 1 ชม. ที่แล้ว', sellerResponseRate: 'ตอบภายใน 15 นาที', condition: 'มือสอง (สภาพดี)' },
-  { id: 17, title: 'นาฬิกา Seiko Automatic Vintage สายสแตนเลส', price: 3100, category: 'เสื้อผ้า/ยูนิฟอร์ม', location: 'ตึกบริหารธุรกิจ', time: '2 วันที่แล้ว', image: 'https://images.unsplash.com/photo-1524805444758-089113d48a6d?auto=format&fit=crop&w=600&q=80', description: 'นาฬิกาข้อมือผู้ชายระบบออโตเมติก หน้าปัดคลาสสิก เดินตรง มีช่องบอกวันและวันที่', seller: 'ก้อง (บริหาร ปี 4)', sellerStatus: 'ออนไลน์อยู่', sellerResponseRate: 'ตอบไวภายใน 5 นาที', condition: 'มือสอง (สภาพสะสม)' },
-  { id: 18, title: 'พัดลมไอเย็นขนาดพกพา USB', price: 150, category: 'อุปกรณ์การเรียน', location: 'ตึกเรียนรวม 2', time: '2 วันที่แล้ว', image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=600&q=80', description: 'เติมน้ำหรือน้ำแข็งด้านบนแล้วเย็นเจี๊ยบ ปรับระดับความแรงลมได้ 3 ระดับ', seller: 'จอย (วิทยาการจัดการ ปี 1)', sellerStatus: 'ใช้งานล่าสุด 5 ชม. ที่แล้ว', sellerResponseRate: 'ตอบภายใน 1 ชม.', condition: 'มือสอง (สภาพ 90%)' },
-  { id: 19, title: 'หนังสือฟิสิกส์มหาวิทยาลัย (University Physics)', price: 290, category: 'หนังสือเรียน', location: 'ตึกฟิสิกส์', time: '2 วันที่แล้ว', image: 'https://images.unsplash.com/photo-1532012197267-da84d127e765?auto=format&fit=crop&w=600&q=80', description: 'ฉบับแปลไทย เล่มใหญ่เนื้อหาครบถ้วน มีโจทย์พร้อมเฉลยอย่างละเอียดท้ายบท', seller: 'บิว (วิทยาศาสตร์ ปี 2)', sellerStatus: 'ออนไลน์อยู่', sellerResponseRate: 'ตอบไวภายใน 10 นาที', condition: 'มือสอง (สภาพ 92%)' },
-  { id: 20, title: 'ไมค์อัดเสียง USB Condenser Fifine K669B', price: 780, category: 'ไอที/เครื่องใช้ไฟฟ้า', location: 'ตึกดนตรี', time: '3 วันที่แล้ว', image: 'https://images.unsplash.com/photo-1590658268037-6bf12165a8df?auto=format&fit=crop&w=600&q=80', description: 'เสียงคมชัด ใช้แคสเกม อัดเสียงร้อง หรือนำเสนอคุยงานใน Zoom แถมขาตั้งสามขา', seller: 'แดน (ดุริยางคศิลป์ ปี 3)', sellerStatus: 'ออนไลน์อยู่', sellerResponseRate: 'ตอบไวภายใน 2 นาที', condition: 'มือสอง (สภาพดีมาก)' }
 ];
 
 export default function Home() {
   const { theme, setTheme } = useTheme();
   const router = useRouter();
   
+  const [products, setProducts] = useState<Product[]>(INITIAL_PRODUCTS);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [cart, setCart] = useState<CartItem[]>([]);
+  
+  // Modals state
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isAddProductOpen, setIsAddProductOpen] = useState(false);
+  const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
+  const [paymentMethod, setPaymentMethod] = useState<'promptpay' | 'card' | 'truemoney'>('promptpay');
+
+  // Form State สำหรับลงขายสินค้าใหม่
+  const [newProduct, setNewProduct] = useState({
+    title: '',
+    price: '',
+    category: 'อุปกรณ์การเรียน',
+    location: '',
+    description: '',
+    condition: 'มือสอง (สภาพดี)',
+  });
 
   const addToCart = (product: Product, e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
@@ -89,8 +87,40 @@ export default function Home() {
 
   const totalPrice = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-  const goToChat = (product: Product) => {
-    router.push(`/chat?seller=${encodeURIComponent(product.seller)}&product=${encodeURIComponent(product.title)}`);
+  const handleAddProductSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newProduct.title || !newProduct.price) return;
+
+    const createdProduct: Product = {
+      id: Date.now(),
+      title: newProduct.title,
+      price: Number(newProduct.price),
+      category: newProduct.category,
+      location: newProduct.location || 'ในมหาลัย',
+      time: 'เมื่อกี้',
+      image: 'https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?auto=format&fit=crop&w=600&q=80',
+      description: newProduct.description || 'ไม่มีรายละเอียดเพิ่มเติม',
+      seller: 'คุณ (ผู้ใช้ปัจจุบัน)',
+      sellerStatus: 'ออนไลน์อยู่',
+      sellerResponseRate: 'ตอบไวที่สุด',
+      condition: newProduct.condition,
+      isHot: true
+    };
+
+    setProducts([createdProduct, ...products]);
+    setIsAddProductOpen(false);
+    setNewProduct({ title: '', price: '', category: 'อุปกรณ์การเรียน', location: '', description: '', condition: 'มือสอง (สภาพดี)' });
+    alert('🎉 ลงประกาศขายสินค้าสำเร็จแล้ว!');
+  };
+
+  const handlePayment = () => {
+    setPaymentSuccess(true);
+    setTimeout(() => {
+      setCart([]);
+      setIsCheckoutOpen(false);
+      setIsCartOpen(false);
+      setPaymentSuccess(false);
+    }, 2500);
   };
 
   return (
@@ -113,6 +143,15 @@ export default function Home() {
         </div>
 
         <div className="flex items-center gap-2">
+          {/* ปุ่มลงขายสินค้าใหม่ */}
+          <button 
+            onClick={() => setIsAddProductOpen(true)}
+            className="flex items-center gap-1.5 px-3.5 py-2.5 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white font-bold text-xs shadow-lg shadow-cyan-500/20 active:scale-95 transition-all"
+          >
+            <PlusCircle size={18} />
+            <span className="hidden sm:inline">ลงขายสินค้า</span>
+          </button>
+
           <button 
             onClick={() => setIsCartOpen(true)}
             className="relative p-3 rounded-2xl bg-slate-100 dark:bg-slate-800/80 hover:bg-cyan-500/10 text-slate-800 dark:text-slate-100 hover:text-cyan-500 dark:hover:text-cyan-400 transition-all border border-slate-200/60 dark:border-slate-700/50"
@@ -168,15 +207,15 @@ export default function Home() {
               <Zap size={22} className="text-cyan-500 fill-cyan-500" />
               รายการสินค้ามาใหม่
             </h2>
-            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">รวม 20 Items สภาพดีพร้อมนัดรับรอบมหาลัย</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400 font-medium mt-0.5">รวมสินค้าสภาพดีพร้อมนัดรับรอบมหาลัย</p>
           </div>
           <span className="text-xs font-black px-3 py-1.5 rounded-xl bg-cyan-500/10 text-cyan-600 dark:text-cyan-400 border border-cyan-500/20">
-            20 PRODUCTS
+            {products.length} PRODUCTS
           </span>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {SAMPLE_PRODUCTS.map((product) => (
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {products.map((product) => (
             <motion.div 
               key={product.id}
               onClick={() => setSelectedProduct(product)}
@@ -238,91 +277,95 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Modal Details */}
+      {/* Modal ลงขายสินค้าใหม่ */}
       <AnimatePresence>
-        {selectedProduct && (
+        {isAddProductOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-xl">
             <motion.div 
               initial={{ scale: 0.9, opacity: 0 }}
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
-              className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 w-full max-w-lg rounded-3xl overflow-hidden shadow-2xl relative max-h-[90vh] flex flex-col"
+              className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 w-full max-w-md rounded-3xl p-6 shadow-2xl relative"
             >
-              <button 
-                onClick={() => setSelectedProduct(null)}
-                className="absolute top-3 right-3 z-20 p-2.5 rounded-full bg-slate-900/80 text-white hover:bg-slate-900 transition-colors"
-              >
-                <X size={18} />
-              </button>
+              <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+                <h3 className="font-black text-base flex items-center gap-2">
+                  <PlusCircle size={20} className="text-cyan-500" /> ลงขายสินค้าใหม่
+                </h3>
+                <button onClick={() => setIsAddProductOpen(false)} className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800">
+                  <X size={18} />
+                </button>
+              </div>
 
-              <div className="overflow-y-auto p-5 space-y-4">
-                <div className="relative h-60 w-full rounded-2xl overflow-hidden bg-white border border-slate-200 shadow-inner">
-                  <Canvas3D category={selectedProduct.category} />
-                  <div className="absolute bottom-3 left-3 text-[10px] font-bold bg-slate-900/90 backdrop-blur-md text-cyan-300 px-3 py-1 rounded-full border border-slate-700">
-                    🧊 3D Preview (พื้นหลังขาว มองชัดเจน)
+              <form onSubmit={handleAddProductSubmit} className="mt-4 space-y-3 text-xs">
+                <div>
+                  <label className="block font-bold mb-1">ชื่อสินค้า *</label>
+                  <input 
+                    type="text" required placeholder="เช่น หนังสือ Physics I สภาพดี"
+                    value={newProduct.title}
+                    onChange={(e) => setNewProduct({ ...newProduct, title: e.target.value })}
+                    className="w-full p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                  />
+                </div>
+
+                <div className="grid grid-cols-2 gap-2">
+                  <div>
+                    <label className="block font-bold mb-1">ราคา (บาท) *</label>
+                    <input 
+                      type="number" required placeholder="250"
+                      value={newProduct.price}
+                      onChange={(e) => setNewProduct({ ...newProduct, price: e.target.value })}
+                      className="w-full p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block font-bold mb-1">หมวดหมู่</label>
+                    <select 
+                      value={newProduct.category}
+                      onChange={(e) => setNewProduct({ ...newProduct, category: e.target.value })}
+                      className="w-full p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none"
+                    >
+                      <option>หนังสือเรียน</option>
+                      <option>อุปกรณ์การเรียน</option>
+                      <option>เสื้อผ้า/ยูนิฟอร์ม</option>
+                      <option>ไอที/เครื่องใช้ไฟฟ้า</option>
+                      <option>อื่นๆ</option>
+                    </select>
                   </div>
                 </div>
 
                 <div>
-                  <h2 className="text-xl font-black">{selectedProduct.title}</h2>
-                  <p className="text-2xl font-black text-cyan-600 dark:text-cyan-400 mt-1">฿{selectedProduct.price.toLocaleString()}</p>
+                  <label className="block font-bold mb-1">สถานที่นัดรับ</label>
+                  <input 
+                    type="text" placeholder="เช่น โรงอาหารกลาง, ตึกวิศวะ"
+                    value={newProduct.location}
+                    onChange={(e) => setNewProduct({ ...newProduct, location: e.target.value })}
+                    className="w-full p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none"
+                  />
                 </div>
 
-                <div className="p-4 bg-slate-50 dark:bg-slate-800/60 border border-slate-200/80 dark:border-slate-700/50 rounded-2xl space-y-1.5">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="font-bold flex items-center gap-1.5 text-slate-800 dark:text-slate-100">
-                      <ShieldCheck size={16} className="text-cyan-500" />
-                      ผู้ขาย: {selectedProduct.seller}
-                    </span>
-                    <span className="text-[10px] font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-500/10 px-2.5 py-0.5 rounded-full border border-emerald-500/20">
-                      ● {selectedProduct.sellerStatus}
-                    </span>
-                  </div>
-                  <p className="text-[11px] text-slate-500 dark:text-slate-400 flex items-center gap-1">
-                    <Zap size={13} className="text-amber-500" />
-                    การตอบกลับ: <span className="font-bold text-slate-700 dark:text-slate-200">{selectedProduct.sellerResponseRate}</span>
-                  </p>
+                <div>
+                  <label className="block font-bold mb-1">รายละเอียดเพิ่มเติม</label>
+                  <textarea 
+                    rows={3} placeholder="บอกรายละเอียด สภาพสินค้า และของแถม..."
+                    value={newProduct.description}
+                    onChange={(e) => setNewProduct({ ...newProduct, description: e.target.value })}
+                    className="w-full p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:outline-none"
+                  />
                 </div>
 
-                <div className="bg-slate-50 dark:bg-slate-800/40 p-4 rounded-2xl border border-slate-100 dark:border-slate-800">
-                  <p className="text-xs text-slate-700 dark:text-slate-300 leading-relaxed">{selectedProduct.description}</p>
-                </div>
-
-                <div className="grid grid-cols-2 gap-2 text-xs">
-                  <div className="p-3 bg-slate-50 dark:bg-slate-800/40 rounded-2xl border border-slate-100 dark:border-slate-800">
-                    <p className="text-slate-400 text-[10px] font-medium">สถานที่นัดรับ</p>
-                    <p className="font-bold mt-0.5">{selectedProduct.location}</p>
-                  </div>
-                  <div className="p-3 bg-slate-50 dark:bg-slate-800/40 rounded-2xl border border-slate-100 dark:border-slate-800">
-                    <p className="text-slate-400 text-[10px] font-medium">สภาพสินค้า</p>
-                    <p className="font-bold mt-0.5">{selectedProduct.condition}</p>
-                  </div>
-                </div>
-
-                <div className="pt-2 flex gap-2">
-                  <button 
-                    onClick={() => {
-                      addToCart(selectedProduct);
-                      alert('เพิ่มสินค้าลงตะกร้าเรียบร้อย!');
-                    }}
-                    className="flex-1 py-3.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white rounded-2xl font-black text-xs shadow-lg shadow-cyan-500/25 transition-all flex items-center justify-center gap-2 active:scale-95"
-                  >
-                    <ShoppingCart size={18} /> ใส่ตะกร้าเลย
-                  </button>
-                  <button 
-                    onClick={() => goToChat(selectedProduct)}
-                    className="px-5 py-3.5 bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 text-slate-800 dark:text-slate-100 rounded-2xl font-bold text-xs transition-colors flex items-center justify-center gap-1.5"
-                  >
-                    <MessageSquare size={16} /> ทักแชท
-                  </button>
-                </div>
-              </div>
+                <button 
+                  type="submit"
+                  className="w-full py-3.5 mt-2 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white rounded-2xl font-black text-xs transition-all shadow-lg shadow-cyan-500/25 active:scale-95"
+                >
+                  ยืนยันการลงขาย
+                </button>
+              </form>
             </motion.div>
           </div>
         )}
       </AnimatePresence>
 
-      {/* Cart Drawer */}
+      {/* Cart Drawer & Checkout Trigger */}
       <AnimatePresence>
         {isCartOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-end bg-slate-950/80 backdrop-blur-md">
@@ -368,16 +411,115 @@ export default function Home() {
                     <span className="text-cyan-600 dark:text-cyan-400 text-xl">฿{totalPrice.toLocaleString()}</span>
                   </div>
                   <button 
-                    onClick={() => {
-                      alert('สั่งซื้อสินค้าเรียบร้อยแล้ว!');
-                      setCart([]);
-                      setIsCartOpen(false);
-                    }}
+                    onClick={() => setIsCheckoutOpen(true)}
                     className="w-full py-3.5 bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-600 hover:to-blue-700 text-white rounded-2xl font-black text-xs transition-all shadow-lg shadow-cyan-500/25 active:scale-95"
                   >
-                    ยืนยันการสั่งซื้อ
+                    ดำเนินการชำระเงิน
                   </button>
                 </div>
+              )}
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Payment Portal Modal */}
+      <AnimatePresence>
+        {isCheckoutOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/85 backdrop-blur-xl">
+            <motion.div 
+              initial={{ scale: 0.9, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              exit={{ scale: 0.9, opacity: 0 }}
+              className="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 w-full max-w-md rounded-3xl p-6 shadow-2xl relative overflow-hidden"
+            >
+              {paymentSuccess ? (
+                <div className="py-8 text-center space-y-3">
+                  <CheckCircle2 size={64} className="text-emerald-500 mx-auto animate-bounce" />
+                  <h3 className="text-2xl font-black">ชำระเงินสำเร็จ!</h3>
+                  <p className="text-xs text-slate-400">ระบบได้ส่งใบเสร็จและแจ้งผู้ขายเรียบร้อยแล้ว</p>
+                </div>
+              ) : (
+                <>
+                  <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
+                    <h3 className="font-black text-base flex items-center gap-2">
+                      <CreditCard size={20} className="text-cyan-500" /> ระบบชำระเงิน
+                    </h3>
+                    <button onClick={() => setIsCheckoutOpen(false)} className="p-2 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800">
+                      <X size={18} />
+                    </button>
+                  </div>
+
+                  <div className="mt-4 space-y-4 text-xs">
+                    {/* ยอดชำระ */}
+                    <div className="p-4 bg-slate-50 dark:bg-slate-800/60 rounded-2xl border border-slate-200/80 dark:border-slate-700/50 flex justify-between items-center">
+                      <span className="font-bold text-slate-500">ยอดชำระสุทธิ</span>
+                      <span className="text-2xl font-black text-cyan-500">฿{totalPrice.toLocaleString()}</span>
+                    </div>
+
+                    {/* ช่องทางชำระเงิน */}
+                    <div>
+                      <label className="block font-bold mb-2">เลือกช่องทางการชำระเงิน</label>
+                      <div className="grid grid-cols-3 gap-2">
+                        <button 
+                          onClick={() => setPaymentMethod('promptpay')}
+                          className={`p-3 rounded-2xl border flex flex-col items-center justify-center gap-1.5 transition-all ${
+                            paymentMethod === 'promptpay' ? 'border-cyan-500 bg-cyan-500/10 text-cyan-500 font-bold' : 'border-slate-200 dark:border-slate-800'
+                          }`}
+                        >
+                          <QrCode size={20} /> PromptPay
+                        </button>
+                        <button 
+                          onClick={() => setPaymentMethod('card')}
+                          className={`p-3 rounded-2xl border flex flex-col items-center justify-center gap-1.5 transition-all ${
+                            paymentMethod === 'card' ? 'border-cyan-500 bg-cyan-500/10 text-cyan-500 font-bold' : 'border-slate-200 dark:border-slate-800'
+                          }`}
+                        >
+                          <CreditCard size={20} /> บัตรเครดิต
+                        </button>
+                        <button 
+                          onClick={() => setPaymentMethod('truemoney')}
+                          className={`p-3 rounded-2xl border flex flex-col items-center justify-center gap-1.5 transition-all ${
+                            paymentMethod === 'truemoney' ? 'border-cyan-500 bg-cyan-500/10 text-cyan-500 font-bold' : 'border-slate-200 dark:border-slate-800'
+                          }`}
+                        >
+                          <Wallet size={20} /> TrueMoney
+                        </button>
+                      </div>
+                    </div>
+
+                    {/* แสดงรายละเอียดตามช่องทาง */}
+                    {paymentMethod === 'promptpay' && (
+                      <div className="p-4 bg-white dark:bg-slate-950 rounded-2xl border border-slate-200 dark:border-slate-800 text-center space-y-2">
+                        <div className="w-36 h-36 mx-auto bg-slate-100 rounded-xl flex items-center justify-center border border-slate-300">
+                          <QrCode size={100} className="text-slate-800" />
+                        </div>
+                        <p className="text-[10px] text-slate-400">สแกน QR Code เพื่อชำระเงินผ่านแอปธนาคาร</p>
+                      </div>
+                    )}
+
+                    {paymentMethod === 'card' && (
+                      <div className="space-y-2">
+                        <input type="text" placeholder="หมายเลขบัตร 16 หลัก" className="w-full p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700" />
+                        <div className="grid grid-cols-2 gap-2">
+                          <input type="text" placeholder="MM/YY" className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700" />
+                          <input type="text" placeholder="CVV" className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700" />
+                        </div>
+                      </div>
+                    )}
+
+                    {paymentMethod === 'truemoney' && (
+                      <input type="text" placeholder="เบอร์โทรศัพท์ TrueMoney Wallet" className="w-full p-3 rounded-xl bg-slate-50 dark:bg-slate-800 border border-slate-200 dark:border-slate-700" />
+                    )}
+
+                    <button 
+                      onClick={handlePayment}
+                      className="w-full py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white rounded-2xl font-black text-xs transition-all shadow-lg shadow-emerald-500/20 active:scale-95 mt-2"
+                    >
+                      ยืนยันการชำระเงิน ฿{totalPrice.toLocaleString()}
+                    </button>
+                  </div>
+                </>
               )}
             </motion.div>
           </div>
