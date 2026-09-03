@@ -526,7 +526,7 @@ export default function Home() {
               </div>
             )}
           </div>
-        </div>
+        
 
         {/* Products Grid */}
         <section className="mt-8">
