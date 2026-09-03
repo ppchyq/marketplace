@@ -99,6 +99,7 @@ export default function Home() {
   
   // Showcase Mode (3D / Image)
   const [modelView, setModelView] = useState<'3d' | 'image'>('3d');
+  const [activeTab, setActiveTab] = useState<'home' | 'profile'>('home');
 
   // Modals state
   const [isCartOpen, setIsCartOpen] = useState(false);
@@ -642,7 +643,20 @@ export default function Home() {
             ))}
           </div>
         </section>
+{/* ==================== หน้าแรก (Home Tab) ==================== */}
+          {activeTab === 'home' && (
+            <>
+              {/* <section className="my-6"> ... Hero Section เดิม ... </section> */}
+              {/* <div className="grid ..."> ... รายการสินค้าเดิม ... </div> */}
+            </>
+          )}
 
+          {/* ==================== หน้าโปรไฟล์ "ฉัน" (Profile Tab) ==================== */}
+          {activeTab === 'profile' && (
+            <div className="max-w-md mx-auto space-y-4 pb-20">
+              {/* ... โค้ดโปรไฟล์ที่คุณส่งมา ... */}
+            </div>
+          )}
         {/* Modal Voucher Center */}
         <AnimatePresence>
           {isVoucherCenterOpen && (
@@ -1062,6 +1076,42 @@ export default function Home() {
           <PlusCircle size={20} />
           <span>ลงขาย</span>
         </button>
+        {/* Bottom Navigation Bar สไตล์ App Shopee (ยึดติดล่างสุดจอมือถือ) */}
+<div className="fixed bottom-0 left-0 right-0 z-50 bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-2 px-6 flex justify-around items-center sm:hidden shadow-lg">
+  
+  {/* ปุ่มหน้าแรก */}
+  <button 
+    onClick={() => setActiveTab('home')}
+    className={`flex flex-col items-center gap-1 ${activeTab === 'home' ? 'text-cyan-500 font-bold' : 'text-slate-400'}`}
+  >
+    <Home size={20} />
+    <span className="text-[10px]">หน้าแรก</span>
+  </button>
+
+  {/* ปุ่มตระกร้า */}
+  <button 
+    onClick={() => setIsCartOpen(true)}
+    className="flex flex-col items-center gap-1 text-slate-400 relative"
+  >
+    <ShoppingCart size={20} />
+    <span className="text-[10px]">ตะกร้า</span>
+    {cart.length > 0 && (
+      <span className="absolute -top-1 right-1 bg-rose-500 text-white text-[9px] w-4 h-4 rounded-full flex items-center justify-center font-bold">
+        {cart.length}
+      </span>
+    )}
+  </button>
+
+  {/* ปุ่มโปรไฟล์ "ฉัน" */}
+  <button 
+    onClick={() => setActiveTab('profile')}
+    className={`flex flex-col items-center gap-1 ${activeTab === 'profile' ? 'text-cyan-500 font-bold' : 'text-slate-400'}`}
+  >
+    <User size={20} />
+    <span className="text-[10px]">ฉัน</span>
+  </button>
+
+</div>
     </div>
   );
 }
