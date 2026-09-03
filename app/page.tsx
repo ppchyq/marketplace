@@ -4,11 +4,11 @@ import dynamic from 'next/dynamic';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useTheme } from 'next-themes';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { 
   Search, Moon, Sun, ShoppingBag, Sparkles, X, 
   MessageSquare, ShoppingCart, Trash2, Plus, Zap,
-  PlusCircle, CreditCard, QrCode, Wallet, CheckCircle2, MapPin, Tag, History, Send, Package, Ticket, Check, ArrowLeft, Minus, Upload, Loader2, ShieldCheck, Clock, Flame, Star, ChevronRight
+  PlusCircle, CreditCard, QrCode, Wallet, CheckCircle2, MapPin, Tag, History, Send, Package, Ticket, Check, ArrowLeft, Minus, Upload, Loader2, Flame
 } from 'lucide-react';
 
 const Canvas3D = dynamic(() => import('@/components/Canvas3D'), { ssr: false });
@@ -72,7 +72,8 @@ const INITIAL_PRODUCTS: Product[] = [
 
 export default function Home() {
   const { theme, setTheme } = useTheme();
-  
+  const [mounted, setMounted] = useState(false);
+
   const [products, setProducts] = useState<Product[]>(INITIAL_PRODUCTS);
   const [vouchers, setVouchers] = useState<Voucher[]>(INITIAL_VOUCHERS);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
@@ -110,6 +111,11 @@ export default function Home() {
     description: '', 
     condition: 'มือสอง (สภาพดี)' 
   });
+
+  // ป้องกัน Hydration Mismatch
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -226,7 +232,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 dark:bg-[#0B0F17] text-slate-900 dark:text-slate-100 font-sans relative selection:bg-cyan-500 selection:text-white pb-32">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#0B0F17] text-slate-900 dark:text-slate-100 font-sans relative selection:bg-cyan-500 selection:text-white pb-32 transition-colors duration-300">
       
       {/* Background Glow Effect */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
@@ -281,9 +287,20 @@ export default function Home() {
               )}
             </button>
 
-            <button onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} className="p-2.5 rounded-2xl bg-slate-100 dark:bg-slate-800/80 border border-slate-200/60 dark:border-slate-700/60">
-              {theme === 'dark' ? <Sun size={18} className="text-amber-400" /> : <Moon size={18} className="text-indigo-600" />}
-            </button>
+            {/* ปุ่มสลับ Light / Dark Mode */}
+            {mounted && (
+              <button 
+                onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')} 
+                className="p-2.5 rounded-2xl bg-slate-100 dark:bg-slate-800/80 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all border border-slate-200/60 dark:border-slate-700/60 active:scale-95"
+                title="สลับโหมดมืด/สว่าง"
+              >
+                {theme === 'dark' ? (
+                  <Sun size={18} className="text-amber-400 transition-transform rotate-0 hover:rotate-90" />
+                ) : (
+                  <Moon size={18} className="text-indigo-600 transition-transform -rotate-12 hover:rotate-0" />
+                )}
+              </button>
+            )}
           </div>
         </header>
 
