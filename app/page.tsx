@@ -514,35 +514,14 @@ export default function Home() {
                 รวมหนังสือเรียน ยูนิฟอร์ม ไอที และอุปกรณ์การเรียน นัดรับในมหาลัยง่ายๆ ได้ทันที
               </p>
 
-              {/* Search Input */}
-              <div className="relative flex items-center">
-                <Search size={18} className="absolute left-3.5 text-cyan-500 pointer-events-none" />
-                <input 
-                  type="text" 
-                  placeholder="ค้นหาสินค้า, เสื้อกาวน์..." 
-                  className="w-full pl-10 pr-24 py-3 sm:py-4 rounded-2xl bg-white/90 dark:bg-slate-900/90 border border-slate-200 dark:border-slate-700/80 focus:outline-none focus:ring-2 focus:ring-cyan-500 text-xs sm:text-sm font-semibold shadow-md dark:shadow-none backdrop-blur-md transition-all" 
-                />
-                <button className="absolute right-1.5 px-3.5 py-2 bg-cyan-500 hover:bg-cyan-600 text-white font-bold text-xs rounded-xl shadow-md transition-all">
-                  ค้นหา
-                </button>
-              </div>
+              
+            
             </div>
           </div>
         </section>
         {/* เมนูด่วนสไตล์ Shopee (Shortcut Grid) */}
         <div className="grid grid-cols-4 gap-2 sm:gap-4 my-6 p-3 sm:p-5 bg-white dark:bg-slate-900 rounded-2xl sm:rounded-3xl border border-slate-200/80 dark:border-slate-800 shadow-sm">
           
-          {/* 1. ปุ่มลงขายสินค้า */}
-          <button 
-            onClick={() => setIsAddProductOpen(true)}
-            className="flex flex-col items-center gap-1.5 group active:scale-95 transition-transform"
-          >
-            <div className="p-2.5 sm:p-3.5 rounded-2xl bg-gradient-to-tr from-cyan-500 to-blue-600 text-white shadow-md shadow-cyan-500/20 group-hover:scale-105 transition-transform">
-              <PlusCircle size={22} />
-            </div>
-            <span className="text-[10px] sm:text-xs font-bold text-slate-700 dark:text-slate-200">ลงขายสินค้า</span>
-          </button>
-
           {/* 2. ปุ่มเก็บโค้ดส่วนลด */}
           <button 
             onClick={() => setIsVoucherCenterOpen(true)}
